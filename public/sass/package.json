@@ -1,9 +1,0 @@
-{
-  "scripts": {
-    "compile": "sass style.scss style.css",
-    "watch": "sass --watch style.scss style.css"
-  },
-  "devDependencies": {
-    "sass": "^1.56.0"
-  }
-}

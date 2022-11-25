@@ -1,0 +1,27 @@
+{
+  "name": "projet-plante",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "sass public/sass/style.scss public/sass/style.css",
+    "watch": "sass --watch public/sass/style.scss public/sass/style.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RaphaelDumas1/projet-plante.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RaphaelDumas1/projet-plante/issues"
+  },
+  "homepage": "https://github.com/RaphaelDumas1/projet-plante#readme",
+  "dependencies": {
+    "sass": "^1.56.1"
+  }
+}

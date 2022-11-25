@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cherche et Trouve{% endblock %}
+
+{% block header %}
+    <h1>Cherche et Trouve</h1>
+{% endblock %}
+
+{% block body %}
+    <input type="button" value="Connexion" onclick="window.location.href='{{path('Connexion')}}';">
+    <input type="button" value="Inscription" onclick="window.location.href='{{path('Inscription')}}';">
+{% endblock %}
