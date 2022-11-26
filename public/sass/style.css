@@ -1,32 +1,84 @@
+.d-flex {
+  display: flex;
+}
+
+.al-center {
+  align-items: center;
+}
+
 body {
   margin: 0;
   background-color: whitesmoke;
 }
 
 header {
-  background-color: rgb(33, 177, 33);
+  background-color: rgba(144, 238, 144, 0.9);
   width: 100%;
   height: 10vh;
-  display: flex;
   justify-content: space-around;
-  align-items: center;
-  margin-bottom: 5vh;
 }
 
 .en-tete {
-  font-size: 3vh;
+  font-size: 4vh;
+  font-family: "Caveat", sans-serif;
 }
 
-input {
+.button {
   border-radius: 20px;
-  height: 3vh;
+  height: 5vh;
   border: none;
   padding: 0 1vh;
+  margin: 2vh 0;
+  background-color: rgb(87, 230, 87);
+  width: 50vw;
+  cursor: pointer;
+}
+.button:hover {
+  background-color: #1cbb1c;
+}
+
+.button-deconnexion {
+  background-color: rgb(238, 79, 79);
+  width: 25vw;
+}
+.button-deconnexion:hover {
+  background-color: #ea2020;
 }
 
 .icone {
   border-radius: 50%;
   height: 7vh;
+}
+
+.div-center {
+  justify-content: center;
+  flex-direction: column;
+  height: 90vh;
+}
+.div-center::after {
+  content: "";
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
+  background-image: url(https://images.wallpaperscraft.com/image/single/leaves_plant_green_126895_1440x2560.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 0.6;
+}
+
+@media screen and (min-width: 700px) {
+  .en-tete {
+    font-size: 6vh;
+  }
+  .button {
+    width: 15vw;
+  }
+  .button-deconnexion {
+    width: 7vw;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */
