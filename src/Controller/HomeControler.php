@@ -74,8 +74,8 @@ class HomeControler extends AbstractController
     public function admin_plantes_info(PlanteRepository $repository, int $id,TexteBeforeRepository $repository2, TexteAfterRepository $repository3): Response
     {
         $plantes = $repository->findBy(array('id' => $id));
-        $text_before = $repository2->findBy(array('id' => $id));
-        $text_after = $repository3->findBy(array('id' => $id));
+        $text_before = $repository2->findBy(array('plante' => $id));
+        $text_after = $repository3->findBy(array('plante' => $id));
         return $this->render('Admin/infoplantes.html.twig', [
             'plantes' => $plantes, 'text_before' => $text_before, 'text_after' => $text_after
         ]);
