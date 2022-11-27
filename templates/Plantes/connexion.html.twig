@@ -9,5 +9,7 @@
 {% block body %}
 <div class="div-center d-flex al-center">
     <p>Ici formulaire pour se connecter<p>
+    <input type="button" class="button" value="Bouton Temporaire -> joueur" onclick="window.location.href='{{path('Menu')}}';">
+    <input type="button" class="button" value="Bouton Temporaire -> admin" onclick="window.location.href='{{path('Admin')}}';">
 </div>
 {% endblock %}

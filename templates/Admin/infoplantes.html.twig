@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% for plante in plantes %}{{plante.nom}}{% endfor %}{% endblock %}
+
+{% block header %}
+    <input type="button" class="button button-deconnexion" value="Retour" onclick="window.location.href='{{path('Admin-plantes')}}';">
+    {% for plante in plantes %}<h1 class="en-tete">{{plante.nom}}</h1>{% endfor %}
+    <input type="button" class="button button-deconnexion" value="Déconnexion" onclick="window.location.href='{{path('Premiere_page')}}';">
+{% endblock %}
+
+{% block body %}
+<div class="div-center d-flex al-center">
+    <div class="cadre d-flex al-center">
+        {% for plante in plantes %}
+            <h2>Niveau : {{plante.niveau}}</h2>
+        {% endfor %}
+        {% for before in text_before %}
+            <h2>Texte avant d'avoir trouver</h2>
+            <h3>{{before.titre}}</h3>
+            <p class="texte">{{before.texte}}</p>
+            <img class="logo" src="{{before.logo}}">
+        {% endfor %}
+        {% for after in text_after %}
+            <h2>Texte après avoir trouver</h2>
+            <h3>{{after.titre}}</h3>
+            <p class="texte">{{after.texte}}</p>
+            <img class="logo" src="{{after.logo}}">
+        {% endfor %}
+    </div>
+    {% for plante in plantes %}
+        <input type="button" class="button" value="Modifer" onclick="window.location.href='/admin/plantes/modifier/{{plante.id}}';">
+    {% endfor %}
+</div>
+{% endblock %}

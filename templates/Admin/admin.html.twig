@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin{% endblock %}
+
+{% block header %}
+    <input type="button" class="button button-deconnexion" value="Déconnexion" onclick="window.location.href='{{path('Premiere_page')}}';">
+    <h1 class="en-tete">Administration</h1>
+{% endblock %}
+
+{% block body %}
+<div class="div-center d-flex al-center">
+    <input type="button" class="button" value="Plantes" onclick="window.location.href='{{path('Admin-plantes')}}';">
+    <input type="button" class="button" value="Comptes"';">
+</div>
+{% endblock %}

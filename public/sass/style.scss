@@ -1,4 +1,5 @@
 $green-color : rgba(144,238,144,0.9);
+$fond-color : rgba(245,245,245, 0.8);
 $button-color : rgb(87, 230, 87);
 $button-deconnexion-color: rgb(238, 79, 79);
 $title-font: "Caveat", sans-serif;
@@ -9,6 +10,7 @@ $title-font: "Caveat", sans-serif;
     }
 }
 @include display(flex);
+@include display(none);
 
 @mixin align-items($type) {
     .al-#{$type} {
@@ -19,7 +21,7 @@ $title-font: "Caveat", sans-serif;
 
 body{
     margin: 0;
-    background-color: whitesmoke;
+    background-color: $fond-color;
 }
 header{
     background-color: $green-color;
@@ -73,6 +75,18 @@ header{
         opacity: 0.6;
     }
 }
+.logo{
+    width: 30vw;
+}
+.cadre{
+    flex-direction: column;
+    background-color: $fond-color;
+    padding: 1vw;
+}
+.texte{
+    margin: 1vw;
+    text-align: center;
+}
 @media screen and (min-width: 700px){
     .en-tete{
         font-size: 6vh;
@@ -82,5 +96,11 @@ header{
     }
     .button-deconnexion{
         width: 7vw;
+    }
+    .logo{
+        width: 10vw;
+    }
+    .cadre{
+        width: 50%;
     }
 }
