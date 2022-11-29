@@ -75,6 +75,13 @@ header{
         opacity: 0.6;
     }
 }
+.div-center-plante{
+    height: auto;
+    margin: 3vh;
+    &::after{
+        height: 150vh;
+    }
+}
 .logo{
     width: 30vw;
 }
@@ -85,6 +92,7 @@ header{
 }
 .texte{
     margin: 1vw;
+    padding: 2vw;
     text-align: center;
 }
 @media screen and (min-width: 700px){
@@ -106,5 +114,8 @@ header{
     .cadre-button{
         width: auto;
         flex-direction: row;
+    }
+    .texte{
+        padding: 0;
     }
 }

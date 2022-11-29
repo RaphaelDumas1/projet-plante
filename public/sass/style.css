@@ -73,6 +73,14 @@ header {
   opacity: 0.6;
 }
 
+.div-center-plante {
+  height: auto;
+  margin: 3vh;
+}
+.div-center-plante::after {
+  height: 150vh;
+}
+
 .logo {
   width: 30vw;
 }
@@ -85,6 +93,7 @@ header {
 
 .texte {
   margin: 1vw;
+  padding: 2vw;
   text-align: center;
 }
 
@@ -107,6 +116,9 @@ header {
   .cadre-button {
     width: auto;
     flex-direction: row;
+  }
+  .texte {
+    padding: 0;
   }
 }
 

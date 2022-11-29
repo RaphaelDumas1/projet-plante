@@ -9,27 +9,28 @@
 {% endblock %}
 
 {% block body %}
-<div class="div-center d-flex al-center">
+<div class="div-center div-center-plante d-flex al-center">
     <div class="cadre d-flex al-center">
         {% for plante in plantes %}
+            <img class="logo" src="https://www.francetvinfo.fr/pictures/3aYw1BcT2fmA8vMgSCsHjOob8KE/1200x1200/2017/01/21/phpKXIp0H_1.jpg"> 
             <h2>Niveau : {{plante.niveau}}</h2>
         {% endfor %}
         {% for before in text_before %}
-            <h2>Texte avant d'avoir trouver</h2>
-            <h3>{{before.titre}}</h3>
+            <h2 class="texte">Texte avant d'avoir trouver</h2>
+            <h3 class="texte">{{before.titre}}</h3>
             <p class="texte">{{before.texte}}</p>
             <img class="logo" src="{{before.logo}}">
         {% endfor %}
         {% for after in text_after %}
-            <h2>Texte après avoir trouver</h2>
-            <h3>{{after.titre}}</h3>
+            <h2 class="texte">Texte après avoir trouver</h2>
+            <h3 class="texte">{{after.titre}}</h3>
             <p class="texte">{{after.texte}}</p>
             <img class="logo" src="{{after.logo}}">
         {% endfor %}
     </div>
     {% for plante in plantes %}
         {% if plante.Active == 1%}
-            <input type="button" class="button" value="Modifer" onclick="window.location.href='/admin/plantes/modifier/{{plante.id}}';">
+            <input type="button" class="button" value="Modifier" onclick="window.location.href='/admin/plantes/modifier/{{plante.id}}';">
             <input type="button" class="button" value="Effacer" onclick="window.location.href='/admin/plantes/effacer/{{plante.id}}';">
         {% endif %}
     {% endfor %}
