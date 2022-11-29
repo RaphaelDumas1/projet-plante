@@ -28,7 +28,10 @@
         {% endfor %}
     </div>
     {% for plante in plantes %}
-        <input type="button" class="button" value="Modifer" onclick="window.location.href='/admin/plantes/modifier/{{plante.id}}';">
+        {% if plante.Active == 1%}
+            <input type="button" class="button" value="Modifer" onclick="window.location.href='/admin/plantes/modifier/{{plante.id}}';">
+            <input type="button" class="button" value="Effacer" onclick="window.location.href='/admin/plantes/effacer/{{plante.id}}';">
+        {% endif %}
     {% endfor %}
 </div>
 {% endblock %}

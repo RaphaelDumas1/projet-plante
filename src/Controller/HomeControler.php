@@ -63,8 +63,19 @@ class HomeControler extends AbstractController
     */
     public function admin_plantes(PlanteRepository $repository): Response
     {
-        $plantes = $repository->findAll();
-        return $this->render('Admin/plantes.html.twig', ['plantes' => $plantes,]);
+        $plantes = $repository->findBy(['Active' => '1']);
+        $active = 1;
+        return $this->render('Admin/plantes.html.twig', ['plantes' => $plantes, 'active' => $active,]);
+    }
+
+    /**
+    * @Route("/admin/plantes/ancienne", name="Admin-plantes-ancienne")
+    */
+    public function admin_plantes_ancienne(PlanteRepository $repository): Response
+    {
+        $plantes = $repository->findBy(['Active' => '0']);
+        $active = 0; 
+        return $this->render('Admin/plantes.html.twig', ['plantes' => $plantes, 'active' => $active,]);
     }
 
     /**
@@ -99,5 +110,17 @@ class HomeControler extends AbstractController
         return $this->render('Admin/modifplante.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+    * @Route("/admin/plantes/effacer/{id}", name="Effacer-plante")
+    */
+    
+    public function plante_effacer(PlanteRepository $repository, Plante $plante)
+    {
+        $plante->setActive(0);
+        $repository->save($plante, true);
+
+        return $this->redirectToRoute('Admin-plantes'); 
     }
 }
