@@ -5,22 +5,29 @@
 {% block header %}
     <input type="button" class="button button-deconnexion" value="Annuler" onclick="history.back()">
     <h1 class="en-tete">Modification</h1>
-    <input type="button" class="button button-deconnexion" value="Déconnexion" onclick="window.location.href='{{path('Premiere_page')}}';">
+    <input type="button" class="button button-deconnexion" value="Déconnexion" onclick="window.location.href='{{path('app_logout')}}';">
 {% endblock %}
 
 
 {% block body %}
 <div class="div-center d-flex al-center">
-    <div class="cadre d-flex al-center">
+    <div class="cadre cadre-form d-flex al-center">
         {{ form_start(form) }}
-            <label for="">Nom : </label>
-                {{ form_widget(form.nom) }}
-            <label for="">Niveau : </label>
-                {{ form_widget(form.niveau) }}
-            <div class="d-none">
-                {{ form_widget(form.Active) }}
-            </div>
-            <button type="submit" class="button">Modifier</button>
+            <h2>Information de la plante</h2>
+            <ul style="list-style-type: none">
+                <li>
+                    <label for="">Nom : </label>
+                        {{ form_widget(form.nom) }}
+                </li>
+                <li>
+                    <label for="">Niveau : </label>
+                        {{ form_widget(form.niveau) }}
+                </li>
+                <div class="d-none">
+                    {{ form_widget(form.Active) }}
+                </div>
+                <button type="submit" class="button">Modifier</button>
+            </ul>
         {{ form_end(form) }}
     </div>
 </div>

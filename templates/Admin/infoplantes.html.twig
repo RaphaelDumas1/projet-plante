@@ -5,7 +5,7 @@
 {% block header %}
     <input type="button" class="button button-deconnexion" value="Retour" onclick="window.location.href='{{path('Admin-plantes')}}';">
     {% for plante in plantes %}<h1 class="en-tete">{{plante.nom}}</h1>{% endfor %}
-    <input type="button" class="button button-deconnexion" value="Déconnexion" onclick="window.location.href='{{path('Premiere_page')}}';">
+    <input type="button" class="button button-deconnexion" value="Déconnexion" onclick="window.location.href='{{path('app_logout')}}';">
 {% endblock %}
 
 {% block body %}
