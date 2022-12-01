@@ -27,15 +27,15 @@ class PlanteCompte
     #[ORM\JoinColumn(nullable: false)]
     private ?Plante $plante = null;
 
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Compte $compte = null;
-
     #[ORM\Column]
     private ?float $longitude = null;
 
     #[ORM\Column]
     private ?float $latitude = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
 
     public function getId(): ?int
     {
@@ -90,17 +90,6 @@ class PlanteCompte
         return $this;
     }
 
-    public function getCompte(): ?Compte
-    {
-        return $this->compte;
-    }
-
-    public function setCompte(?Compte $compte): self
-    {
-        $this->compte = $compte;
-
-        return $this;
-    }
 
     public function getLongitude(): ?float
     {
@@ -122,6 +111,18 @@ class PlanteCompte
     public function setLatitude(float $latitude): self
     {
         $this->latitude = $latitude;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
