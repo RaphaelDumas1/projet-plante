@@ -12,8 +12,12 @@ use App\Repository\TexteBeforeRepository;
 use App\Repository\TexteAfterRepository;
 
 use App\Entity\Plante;
+use App\Entity\TexteBefore;
+use App\Entity\TexteAfter;
 
 use App\Form\PlanteType;
+use App\Form\TexteBeforeType;
+use App\Form\TexteAfterType;
 
 
 class HomeControler extends AbstractController
@@ -104,10 +108,50 @@ class HomeControler extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $repository->save($plante, true);
 
-            return $this->redirectToRoute('Admin-plante-info', ['id' => $plante->getId()]);
+            return $this->redirectToRoute('Modifier-plante-before', ['id' => $plante->getId()]);
          }
 
         return $this->render('Admin/modifplante.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+    
+    /**
+    * @Route("/admin/plantes/modifier/{id}/2", name="Modifier-plante-before")
+    */
+    
+    public function plante_modif_before(TexteBefore $before, TexteBeforeRepository $repository, Request $request)
+    {
+        $form = $this->createForm(TexteBeforeType::class, $before);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $repository->save($before, true);
+
+            return $this->redirectToRoute('Modifier-plante-after', ['id' => $before->getId()]);
+         }
+
+        return $this->render('Admin/modifplantebefore.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+    * @Route("/admin/plantes/modifier/{id}/3", name="Modifier-plante-after")
+    */
+    
+    public function plante_modif_after(TexteAfter $after, TexteAfterRepository $repository, Request $request)
+    {
+        $form = $this->createForm(TexteAfterType::class, $after);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $repository->save($after, true);
+
+            return $this->redirectToRoute('Admin-plante-info', ['id' => $after->getId()]);
+         }
+
+        return $this->render('Admin/modifplanteafter.html.twig', [
             'form' => $form->createView(),
         ]);
     }

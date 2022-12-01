@@ -97,6 +97,11 @@ header {
   text-align: center;
 }
 
+.text-area > textarea {
+  width: 20vw;
+  height: 10vh;
+}
+
 @media screen and (min-width: 700px) {
   .en-tete {
     font-size: 6vh;

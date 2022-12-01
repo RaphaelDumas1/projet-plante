@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier{% endblock %}
+
+{% block header %}
+    <h1 class="en-tete">Modification</h1>
+    <input type="button" class="button button-deconnexion" value="Déconnexion" onclick="window.location.href='{{path('Premiere_page')}}';">
+{% endblock %}
+
+
+{% block body %}
+<div class="div-center d-flex al-center">
+    <div class="cadre d-flex al-center">
+        {{ form_start(form) }}
+            <label for="">Titre : </label>
+                {{ form_widget(form.titre) }}
+            <div class="text-area">
+                <label for="">Texte : </label>
+                    {{ form_widget(form.texte) }}
+            </div>
+            <label for="">Url du logo : </label>
+                {{ form_widget(form.logo) }}
+            <div class="d-none">
+                {{ form_widget(form.plante) }}
+            </div>
+            <button type="submit" class="button">Modifier</button>
+        {{ form_end(form) }}
+    </div>
+</div>
+{% endblock %}
