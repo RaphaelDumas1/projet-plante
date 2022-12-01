@@ -32,7 +32,8 @@ class RegistrationController extends AbstractController
                 )
                 );
             $user->setNiveau(1);
-            $user->setPseudo("test");
+            $user->setPseudo("");
+            $user->setPhoto("https://cpelieu.com/wp-content/uploads/2022/09/avatar2.jpg");
 
             $entityManager->persist($user);
             $entityManager->flush();

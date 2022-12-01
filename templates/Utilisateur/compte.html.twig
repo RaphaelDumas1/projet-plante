@@ -10,6 +10,12 @@
 
 {% block body %}
 <div class="div-center d-flex al-center">
-    <input type="button" class="button" value="Coté Admin" onclick="window.location.href='{{path('Admin')}}';">
+    <div class="cadre al-center d-flex">
+        <p>Photo de profil : <img class="icone" src="{{ app.user.photo }}"></p>
+        <p>Nom : {{ app.user.pseudo }}</p>
+        <p>Email : {{ app.user.email }}</p>
+        <p>Niveau : {{ app.user.Niveau }}</p>
+        <input type="button" class="button" value="Modifier" onclick="window.location.href='{{path('compte')}}';">
+    </div>
 </div>
 {% endblock %}
