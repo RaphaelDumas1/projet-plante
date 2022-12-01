@@ -14,10 +14,13 @@ use App\Repository\TexteAfterRepository;
 use App\Entity\Plante;
 use App\Entity\TexteBefore;
 use App\Entity\TexteAfter;
+use App\Entity\Photo;
 
 use App\Form\PlanteType;
 use App\Form\TexteBeforeType;
 use App\Form\TexteAfterType;
+
+use Doctrine\Persistence\ManagerRegistry;
 
 
 class HomeControler extends AbstractController
@@ -26,7 +29,8 @@ class HomeControler extends AbstractController
     * @Route("/", name="Premiere_page")
     */
     public function premiere_page(): Response
-    {
+    {   
+        
         return $this->render('Plantes/premiere_page.html.twig');
     }
 
