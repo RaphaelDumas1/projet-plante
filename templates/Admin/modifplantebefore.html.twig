@@ -4,25 +4,31 @@
 
 {% block header %}
     <h1 class="en-tete">Modification</h1>
-    <input type="button" class="button button-deconnexion" value="Déconnexion" onclick="window.location.href='{{path('Premiere_page')}}';">
 {% endblock %}
 
 
 {% block body %}
 <div class="div-center d-flex al-center">
-    <div class="cadre d-flex al-center">
+    <div class="cadre cadre-form d-flex al-center">
         {{ form_start(form) }}
-            <label for="">Titre : </label>
-                {{ form_widget(form.titre) }}
-            <div class="text-area">
-                <label for="">Texte : </label>
-                    {{ form_widget(form.texte) }}
-            </div>
-            <label for="">Url du logo : </label>
-                {{ form_widget(form.logo) }}
-            <div class="d-none">
-                {{ form_widget(form.plante) }}
-            </div>
+            <h2>Texte d'indice</h2>
+            <ul style="list-style-type: none">
+                <li>
+                    <label for="">Titre : </label>
+                        {{ form_widget(form.titre) }}
+                </li>
+                <li>
+                    <div class="text-area">
+                        <label for="">Texte : </label>
+                            {{ form_widget(form.texte) }}
+                    </div>
+                </li>
+                    <label for="">Url du logo : </label>
+                        {{ form_widget(form.logo) }}
+                <div class="d-none">
+                    {{ form_widget(form.plante) }}
+                </div>
+            </ul>
             <button type="submit" class="button">Modifier</button>
         {{ form_end(form) }}
     </div>

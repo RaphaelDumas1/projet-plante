@@ -3,13 +3,13 @@
 {% block title %}Home{% endblock %}
 
 {% block header %}
-    <input type="button" class="button button-deconnexion" value="Déconnexion" onclick="window.location.href='{{path('Premiere_page')}}';">
+    <input type="button" class="button button-deconnexion" value="Déconnexion" onclick="window.location.href='{{path('app_logout')}}';">
     <h1 class="en-tete">Cherche et Trouve</h1>
     <img class="icone" src="https://cpelieu.com/wp-content/uploads/2022/09/avatar2.jpg">
 {% endblock %}
 
 {% block body %}
 <div class="div-center d-flex al-center">
-    <p>test</p>
+    <input type="button" class="button" value="Coté Admin" onclick="window.location.href='{{path('Admin')}}';">
 </div>
 {% endblock %}

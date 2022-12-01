@@ -99,6 +99,14 @@ header{
     width: 20vw;
     height: 10vh;
 }
+ul{
+    padding: 0 1vh;
+    li{
+        display: flex;
+        justify-content: space-between;
+        margin: 3vh 0;
+    }
+}
 @media screen and (min-width: 700px){
     .en-tete{
         font-size: 6vh;
@@ -114,6 +122,9 @@ header{
     }
     .cadre{
         width: 50%;
+    }
+    .cadre-form{
+        width: 25%;
     }
     .cadre-button{
         width: auto;
