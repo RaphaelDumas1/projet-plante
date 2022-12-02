@@ -15,14 +15,14 @@
             <img class="logo" src="https://www.francetvinfo.fr/pictures/3aYw1BcT2fmA8vMgSCsHjOob8KE/1200x1200/2017/01/21/phpKXIp0H_1.jpg"> 
             <h2>Niveau : {{plante.niveau}}</h2>
         {% endfor %}
+        <h2 class="texte">Texte avant d'avoir trouver</h2>
         {% for before in text_before %}
-            <h2 class="texte">Texte avant d'avoir trouver</h2>
             <h3 class="texte">{{before.titre}}</h3>
             <p class="texte">{{before.texte}}</p>
             <img class="logo" src="{{before.logo}}">
         {% endfor %}
+        <h2 class="texte">Texte après avoir trouver</h2>
         {% for after in text_after %}
-            <h2 class="texte">Texte après avoir trouver</h2>
             <h3 class="texte">{{after.titre}}</h3>
             <p class="texte">{{after.texte}}</p>
             <img class="logo" src="{{after.logo}}">

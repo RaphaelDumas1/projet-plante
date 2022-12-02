@@ -5,7 +5,7 @@
 {% block header %}
     <input type="button" class="button button-deconnexion" value="Déconnexion" onclick="window.location.href='{{path('app_logout')}}';">
     <h1 class="en-tete">Cherche et Trouve</h1>
-    <img class="icone" src="https://cpelieu.com/wp-content/uploads/2022/09/avatar2.jpg" onclick="window.location.href='{{path('compte')}}';">
+    <img class="icone" src="{{ app.user.photo }}" onclick="window.location.href='{{path('compte')}}';">
 {% endblock %}
 
 {% block body %}
@@ -15,7 +15,7 @@
         <p>Nom : {{ app.user.pseudo }}</p>
         <p>Email : {{ app.user.email }}</p>
         <p>Niveau : {{ app.user.Niveau }}</p>
-        <input type="button" class="button" value="Modifier" onclick="window.location.href='{{path('compte')}}';">
+        <input type="button" class="button" value="Modifier profil" onclick="window.location.href='{{path('compte-modifier')}}';">
     </div>
 </div>
 {% endblock %}

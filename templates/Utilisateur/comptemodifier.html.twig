@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block header %}
+    <input type="button" class="button button-deconnexion" value="Déconnexion" onclick="window.location.href='{{path('app_logout')}}';">
+    <h1 class="en-tete">Cherche et Trouve</h1>
+    <img class="icone" src="{{ app.user.photo }}" onclick="window.location.href='{{path('compte')}}';">
+{% endblock %}
+
+{% block body %}
+<div class="div-center d-flex al-center">
+    <div class="cadre al-center d-flex">
+        {{ form_start(form) }}
+            <h2>Compte</h2>
+            <ul style="list-style-type: none">
+                <li>
+                    <label for="">Email : </label>
+                        {{ form_widget(form.email) }}
+                </li>
+                <li>
+                    <label for="">Nom : </label>
+                        {{ form_widget(form.pseudo) }}
+                </li>
+                <li>
+                    <label for="">Photo de profil: </label>
+                        {{ form_widget(form.photo) }}
+                </li>
+                <div class="d-none">
+                    {{ form_widget(form.password) }}
+                </div>
+                <button type="submit" class="button">Valider</button>
+            </ul>
+        {{ form_end(form) }}
+    </div>
+</div>
+{% endblock %}

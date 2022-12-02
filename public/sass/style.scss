@@ -55,7 +55,8 @@ header{
 }
 .icone{
     border-radius: 50%;
-    height: 7vh;
+    height: 8vh;
+    width: 12vw;
 }
 .div-center{
     justify-content: center;
@@ -135,5 +136,8 @@ ul{
     }
     .texte{
         padding: 0;
+    }
+    .icone{
+        width: 4vw;
     }
 }

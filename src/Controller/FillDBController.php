@@ -35,7 +35,7 @@ class FillDBController extends AbstractController
             $plante = new Plante();
             $plante->setNom($plantes["name"]);
             $plante->setNiveau($plantes["level"]);
-            $plante->setActive(False);
+            $plante->setActive(True);
             $entityManager->persist($plante);
             foreach ($plantes["photos"] as $photos){
                 $photo = new Photo();

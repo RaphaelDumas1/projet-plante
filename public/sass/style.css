@@ -51,7 +51,8 @@ header {
 
 .icone {
   border-radius: 50%;
-  height: 7vh;
+  height: 8vh;
+  width: 12vw;
 }
 
 .div-center {
@@ -139,6 +140,9 @@ ul li {
   }
   .texte {
     padding: 0;
+  }
+  .icone {
+    width: 4vw;
   }
 }
 

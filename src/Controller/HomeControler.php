@@ -39,6 +39,9 @@ class HomeControler extends AbstractController
     */
     public function home(): Response
     {
+        if (!$this->getUser()){
+            return $this->redirectToRoute('app_login');
+        }
         return $this->render('Plantes/home.html.twig');
     }
 
@@ -47,6 +50,9 @@ class HomeControler extends AbstractController
     */
     public function admin(): Response
     {
+        if (!$this->getUser()){
+            return $this->redirectToRoute('app_login');
+        }
         return $this->render('Admin/admin.html.twig');
     }
 
@@ -55,6 +61,9 @@ class HomeControler extends AbstractController
     */
     public function admin_plantes(PlanteRepository $repository): Response
     {
+        if (!$this->getUser()){
+            return $this->redirectToRoute('app_login');
+        }
         $plantes = $repository->findBy(['Active' => '1']);
         $active = 1;
         return $this->render('Admin/plantes.html.twig', ['plantes' => $plantes, 'active' => $active,]);
@@ -65,6 +74,9 @@ class HomeControler extends AbstractController
     */
     public function admin_plantes_ancienne(PlanteRepository $repository): Response
     {
+        if (!$this->getUser()){
+            return $this->redirectToRoute('app_login');
+        }
         $plantes = $repository->findBy(['Active' => '0']);
         $active = 0; 
         return $this->render('Admin/plantes.html.twig', ['plantes' => $plantes, 'active' => $active,]);
@@ -76,6 +88,9 @@ class HomeControler extends AbstractController
     
     public function admin_plantes_info(PlanteRepository $repository, int $id,TexteBeforeRepository $repository2, TexteAfterRepository $repository3): Response
     {
+        if (!$this->getUser()){
+            return $this->redirectToRoute('app_login');
+        }
         $plantes = $repository->findBy(array('id' => $id));
         $text_before = $repository2->findBy(array('plante' => $id));
         $text_after = $repository3->findBy(array('plante' => $id));
@@ -90,13 +105,16 @@ class HomeControler extends AbstractController
     
     public function plante_modif(Plante $plante, PlanteRepository $repository, Request $request)
     {
+        if (!$this->getUser()){
+            return $this->redirectToRoute('app_login');
+        }
         $form = $this->createForm(PlanteType::class, $plante);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $repository->save($plante, true);
 
-            return $this->redirectToRoute('Modifier-plante-before', ['id' => $plante->getId()]);
+            return $this->redirectToRoute('Modifier-plante-before', ['plante' => $plante->getId()]);
          }
 
         return $this->render('Admin/modifplante.html.twig', [
@@ -105,18 +123,21 @@ class HomeControler extends AbstractController
     }
     
     /**
-    * @Route("/admin/plantes/modifier/{id}/2", name="Modifier-plante-before")
+    * @Route("/admin/plantes/modifier/{plante}/2", name="Modifier-plante-before")
     */
     
-    public function plante_modif_before(TexteBefore $before, TexteBeforeRepository $repository, Request $request)
+    public function plante_modif_before(TexteBefore $before, TexteBeforeRepository $repository, Request $request, int $plante)
     {
+        if (!$this->getUser()){
+            return $this->redirectToRoute('app_login');
+        }
         $form = $this->createForm(TexteBeforeType::class, $before);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $repository->save($before, true);
 
-            return $this->redirectToRoute('Modifier-plante-after', ['id' => $before->getId()]);
+            return $this->redirectToRoute('Modifier-plante-after', ['plante' => $plante]);
          }
 
         return $this->render('Admin/modifplantebefore.html.twig', [
@@ -125,18 +146,21 @@ class HomeControler extends AbstractController
     }
 
     /**
-    * @Route("/admin/plantes/modifier/{id}/3", name="Modifier-plante-after")
+    * @Route("/admin/plantes/modifier/{plante}/3", name="Modifier-plante-after")
     */
     
-    public function plante_modif_after(TexteAfter $after, TexteAfterRepository $repository, Request $request)
+    public function plante_modif_after(TexteAfter $after, TexteAfterRepository $repository, Request $request, int $plante)
     {
+        if (!$this->getUser()){
+            return $this->redirectToRoute('app_login');
+        }
         $form = $this->createForm(TexteAfterType::class, $after);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $repository->save($after, true);
 
-            return $this->redirectToRoute('Admin-plante-info', ['id' => $after->getId()]);
+            return $this->redirectToRoute('Admin-plante-info', ['id' => $plante]);
          }
 
         return $this->render('Admin/modifplanteafter.html.twig', [
@@ -150,6 +174,9 @@ class HomeControler extends AbstractController
     
     public function plante_effacer(PlanteRepository $repository, Plante $plante)
     {
+        if (!$this->getUser()){
+            return $this->redirectToRoute('app_login');
+        }
         $plante->setActive(0);
         $repository->save($plante, true);
 

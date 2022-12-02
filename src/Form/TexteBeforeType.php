@@ -15,7 +15,7 @@ class TexteBeforeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('titre')
+            ->add('titre', TextType::class, ['required' => false,'empty_data' => ''])
             ->add('texte', TextareaType::class)
             ->add('logo', TextType::class, ['required' => false,'empty_data' => ''])
             ->add('plante')
