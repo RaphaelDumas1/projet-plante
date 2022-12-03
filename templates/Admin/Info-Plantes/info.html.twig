@@ -9,10 +9,21 @@
 {% endblock %}
 
 {% block body %}
+{% for plante in plantes %}
+        {% if plante.Active == 1%}
+            <input type="button" class="button" value="Modifier" onclick="window.location.href='/admin/plantes/modifier/{{plante.id}}';">
+            <input type="button" class="button" value="Détail texte d'indice" onclick="window.location.href='/admin/plantes/indice/{{plante.id}}';">
+            <input type="button" class="button" value="Détail texte de réussite" onclick="window.location.href='/admin/plantes/reponse/{{plante.id}}';">
+            <input type="button" class="button" value="Détail photo" onclick="window.location.href='/admin/plantes/photo/{{plante.id}}';">
+            <input type="button" class="button" value="Effacer" onclick="window.location.href='/admin/plantes/effacer/{{plante.id}}';">
+        {% endif %}
+    {% endfor %}
 <div class="div-center div-center-plante d-flex al-center">
     <div class="cadre d-flex al-center">
+        {% for photo in photos %}
+            <img class="logo" src="{{photo.url}}"> 
+        {% endfor %}
         {% for plante in plantes %}
-            <img class="logo" src="https://www.francetvinfo.fr/pictures/3aYw1BcT2fmA8vMgSCsHjOob8KE/1200x1200/2017/01/21/phpKXIp0H_1.jpg"> 
             <h2>Niveau : {{plante.niveau}}</h2>
         {% endfor %}
         <h2 class="texte">Texte avant d'avoir trouver</h2>
@@ -28,11 +39,5 @@
             <img class="logo" src="{{after.logo}}">
         {% endfor %}
     </div>
-    {% for plante in plantes %}
-        {% if plante.Active == 1%}
-            <input type="button" class="button" value="Modifier" onclick="window.location.href='/admin/plantes/modifier/{{plante.id}}';">
-            <input type="button" class="button" value="Effacer" onclick="window.location.href='/admin/plantes/effacer/{{plante.id}}';">
-        {% endif %}
-    {% endfor %}
 </div>
 {% endblock %}

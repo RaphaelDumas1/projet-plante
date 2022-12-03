@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% for plante in plantes %}{{plante.nom}}{% endfor %}{% endblock %}
+
+{% block header %}
+    {% for plante in plantes %}
+        <input type="button" class="button button-deconnexion" value="Retour" onclick="window.location.href='/admin/plantes/{{plante.id}}';">
+        <h1 class="en-tete">{{plante.nom}}</h1>
+    {% endfor %}
+    <input type="button" class="button button-deconnexion" value="Déconnexion" onclick="window.location.href='{{path('app_logout')}}';">
+{% endblock %}
+
+{% block body %}
+{% for plante in plantes %}
+    <input type="button" class="button" value="Ajouter photo" onclick="window.location.href='/admin/plantes/photo/{{plante.id}}/{{plante.id}}/ajouter';">
+{%endfor%}
+<div class="div-center div-center-plante d-flex al-center">
+    <div class="cadre d-flex al-center">
+        <h2 class="texte">Photos</h2>
+        {% for photo in photos %}
+            <img class="logo" src="{{photo.url}}">
+            {% for plante in plantes %}
+                <input type="button" class="button" value="Modifier" onclick="window.location.href='/admin/plantes/modifier/photo/{{plante.id}}/{{photo.id}}';">
+                <input type="button" class="button" value="Effacer" onclick="window.location.href='/admin/plantes/effacer/photo/{{plante.id}}/{{photo.id}}';">
+            {% endfor %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

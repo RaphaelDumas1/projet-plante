@@ -12,8 +12,8 @@
 <div class="div-center d-flex al-center">
     <div class="cadre cadre-button al-center d-flex">
         {% if active == 1 %}
-            <input type="button" class="button" value="Ajouter une plante">
-            <input type="button" class="button" value="Voir les anciennes plantes" onclick="window.location.href='/admin/plantes/ancienne';">
+            <input type="button" class="button" value="Ajouter une plante" onclick="window.location.href='{{path('Admin-plantes-ajouter')}}';">
+            <input type="button" class="button" value="Voir les anciennes plantes" onclick="window.location.href='{{path('Admin-plantes-ancienne')}}';">
         {% endif %}
         {% if active == 0 %}
             <input type="button" class="button" value="Voir les plantes en jeu" onclick="window.location.href='/admin/plantes/';">

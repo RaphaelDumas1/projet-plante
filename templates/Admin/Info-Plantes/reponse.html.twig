@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% for plante in plantes %}{{plante.nom}}{% endfor %}{% endblock %}
+
+{% block header %}
+    {% for plante in plantes %}
+        <input type="button" class="button button-deconnexion" value="Retour" onclick="window.location.href='/admin/plantes/{{plante.id}}';">
+        <h1 class="en-tete">{{plante.nom}}</h1>
+    {% endfor %}
+    <input type="button" class="button button-deconnexion" value="Déconnexion" onclick="window.location.href='{{path('app_logout')}}';">
+{% endblock %}
+
+{% block body %}
+{% for plante in plantes %}
+    <input type="button" class="button" value="Ajouter réponse" onclick="window.location.href='/admin/plantes/reponse/{{plante.id}}/{{plante.id}}/ajouter';">
+{% endfor %}
+<div class="div-center div-center-plante d-flex al-center">
+    <div class="cadre d-flex al-center">
+        <h2 class="texte">Texte après avoir trouver</h2>
+        {% for after in text_after %}
+            <h3 class="texte">{{after.titre}}</h3>
+            <p class="texte">{{after.texte}}</p>
+            <img class="logo" src="{{after.logo}}">
+            {% for plante in plantes %}
+                <input type="button" class="button" value="Modifier" onclick="window.location.href='/admin/plantes/modifier/reponse/{{plante.id}}/{{after.id}}';">
+                <input type="button" class="button" value="Effacer" onclick="window.location.href='/admin/plantes/effacer/reponse/{{plante.id}}/{{after.id}}';">
+            {% endfor %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

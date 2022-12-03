@@ -7,9 +7,12 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
+use Doctrine\ORM\EntityManagerInterface;
+
 use App\Repository\PlanteRepository;
 use App\Repository\TexteBeforeRepository;
 use App\Repository\TexteAfterRepository;
+use App\Repository\PhotoRepository;
 
 use App\Entity\Plante;
 use App\Entity\TexteBefore;
@@ -19,6 +22,7 @@ use App\Entity\Photo;
 use App\Form\PlanteType;
 use App\Form\TexteBeforeType;
 use App\Form\TexteAfterType;
+use App\Form\PhotoType;
 
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -70,6 +74,31 @@ class HomeControler extends AbstractController
     }
 
     /**
+    * @Route("/admin/plantes/ajouter", name="Admin-plantes-ajouter")
+    */
+    
+    public function admin_plantes_ajouter(Request $request, EntityManagerInterface $manager)
+    {
+        $plante = new Plante();
+        $form = $this->createForm(PlanteType::class, $plante);
+        $form->handleRequest($request);
+
+
+        if ($form->isSubmitted()&& $form->isValid()) {
+            $plante = $form->getData();
+            $plante->setActive(1);
+            $manager->persist($plante);
+            $manager->flush();
+
+            return $this->redirectToRoute('Admin-plante-info', ['id' => $plante->getId()]);
+         }
+
+        return $this->render('Admin/Ajouter/plante.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
     * @Route("/admin/plantes/ancienne", name="Admin-plantes-ancienne")
     */
     public function admin_plantes_ancienne(PlanteRepository $repository): Response
@@ -86,7 +115,7 @@ class HomeControler extends AbstractController
     * @Route("/admin/plantes/{id}", name="Admin-plante-info")
     */
     
-    public function admin_plantes_info(PlanteRepository $repository, int $id,TexteBeforeRepository $repository2, TexteAfterRepository $repository3): Response
+    public function admin_plantes_info(PlanteRepository $repository, int $id,TexteBeforeRepository $repository2, TexteAfterRepository $repository3, PhotoRepository $repository4): Response
     {
         if (!$this->getUser()){
             return $this->redirectToRoute('app_login');
@@ -94,36 +123,66 @@ class HomeControler extends AbstractController
         $plantes = $repository->findBy(array('id' => $id));
         $text_before = $repository2->findBy(array('plante' => $id));
         $text_after = $repository3->findBy(array('plante' => $id));
-        return $this->render('Admin/infoplantes.html.twig', [
-            'plantes' => $plantes, 'text_before' => $text_before, 'text_after' => $text_after
+        $photos = $repository4->findBy(array('plante' => $id));
+        return $this->render('Admin/Info-Plantes/info.html.twig', [
+            'plantes' => $plantes, 'text_before' => $text_before, 'text_after' => $text_after, 'photos' => $photos,
         ]);
     }
 
     /**
-    * @Route("/admin/plantes/modifier/{id}", name="Modifier-plante")
+    * @Route("/admin/plantes/indice/{id}", name="Admin-plante-info-indice")
     */
     
-    public function plante_modif(Plante $plante, PlanteRepository $repository, Request $request)
+    public function admin_plantes_info_indice(TexteBeforeRepository $repository, PlanteRepository $repository2, int $id): Response
     {
         if (!$this->getUser()){
             return $this->redirectToRoute('app_login');
         }
-        $form = $this->createForm(PlanteType::class, $plante);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $repository->save($plante, true);
-
-            return $this->redirectToRoute('Modifier-plante-before', ['plante' => $plante->getId()]);
-         }
-
-        return $this->render('Admin/modifplante.html.twig', [
-            'form' => $form->createView(),
+        $text_before = $repository->findBy(array('plante' => $id));
+        $plantes = $repository2->findBy(array('id' => $id));
+        return $this->render('Admin/Info-Plantes/indice.html.twig', [
+            'text_before' => $text_before, 'plantes' => $plantes,
         ]);
     }
-    
+
     /**
-    * @Route("/admin/plantes/modifier/{plante}/2", name="Modifier-plante-before")
+    * @Route("/admin/plantes/indice/{plante}/{plante2}/ajouter", name="Admin-plantes-indice-ajouter")
+    */
+    
+    public function admin_plantes_indice_ajouter(PlanteRepository $repository, Request $request, EntityManagerInterface $manager,?Plante $plante, int $plante2)
+    {
+        $before = new TexteBefore();
+        $form = $this->createForm(TexteBeforeType::class, $before);
+        $form->handleRequest($request);
+        $plantes = $repository->findBy(array('id' => $plante2));
+
+
+        if ($form->isSubmitted()&& $form->isValid()) {
+            $before = $form->getData();
+            $before->setPlante($plante);
+            $manager->persist($before);
+            $manager->flush();
+
+            return $this->redirectToRoute('Admin-plante-info-indice', ['id' => $plante2]);
+         }
+
+        return $this->render('Admin/Ajouter/before.html.twig', [
+            'form' => $form->createView(), 'plantes' => $plantes,
+        ]);
+    }
+    /**
+    * @Route("/admin/plantes/effacer/indice/{plante}/{id}", name="Admin-plante-indice-effacer")
+    */
+    
+    public function plante_effacer_after(TexteBefore $id, TexteBeforeRepository $repository, EntityManagerInterface $manager, int $plante)
+    {
+        $manager->remove($id);
+        $manager->flush();
+        return $this->redirectToRoute('Admin-plante-info-indice', ['id' => $plante]);
+    }
+
+    /**
+    * @Route("/admin/plantes/modifier/indice/{plante}/{id}", name="Modifier-plante-before")
     */
     
     public function plante_modif_before(TexteBefore $before, TexteBeforeRepository $repository, Request $request, int $plante)
@@ -137,16 +196,69 @@ class HomeControler extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $repository->save($before, true);
 
-            return $this->redirectToRoute('Modifier-plante-after', ['plante' => $plante]);
+            return $this->redirectToRoute('Admin-plante-info-indice', ['id' => $plante]);
          }
 
-        return $this->render('Admin/modifplantebefore.html.twig', [
+        return $this->render('Admin/Modif/before.html.twig', [
             'form' => $form->createView(),
         ]);
     }
 
     /**
-    * @Route("/admin/plantes/modifier/{plante}/3", name="Modifier-plante-after")
+    * @Route("/admin/plantes/reponse/{id}", name="Admin-plante-info-reponse")
+    */
+    
+    public function admin_plantes_info_reponse(TexteAfterRepository $repository, PlanteRepository $repository2, int $id): Response
+    {
+        if (!$this->getUser()){
+            return $this->redirectToRoute('app_login');
+        }
+        $text_after = $repository->findBy(array('plante' => $id));
+        $plantes = $repository2->findBy(array('id' => $id));
+        return $this->render('Admin/Info-Plantes/reponse.html.twig', [
+            'text_after' => $text_after, 'plantes' => $plantes,
+        ]);
+    }
+
+    /**
+    * @Route("/admin/plantes/reponse/{plante}/{plante2}/ajouter", name="Admin-plantes-reponse-ajouter")
+    */
+    
+    public function admin_plantes_reponse_ajouter(PlanteRepository $repository, Request $request, EntityManagerInterface $manager,?Plante $plante, int $plante2)
+    {
+        $after = new TexteAfter();
+        $form = $this->createForm(TexteAfterType::class, $after);
+        $form->handleRequest($request);
+        $plantes = $repository->findBy(array('id' => $plante2));
+
+
+        if ($form->isSubmitted()&& $form->isValid()) {
+            $after = $form->getData();
+            $after->setPlante($plante);
+            $manager->persist($after);
+            $manager->flush();
+
+            return $this->redirectToRoute('Admin-plante-info-reponse', ['id' => $plante2]);
+         }
+
+        return $this->render('Admin/Ajouter/after.html.twig', [
+            'form' => $form->createView(), 'plantes' => $plantes,
+        ]);
+    }
+
+    /**
+    * @Route("/admin/plantes/effacer/reponse/{plante}/{id}", name="Admin-plante-reponse-effacer")
+    */
+    
+    public function plante_effacer_before(TexteAfter $id, TexteAfterRepository $repository, EntityManagerInterface $manager, int $plante)
+    {
+        $manager->remove($id);
+        $manager->flush();
+        return $this->redirectToRoute('Admin-plante-info-reponse', ['id' => $plante]);
+    }
+
+    /**
+    * @Route("/admin/plantes/modifier/reponse/{plante}/{id}", name="Modifier-plante-after")
     */
     
     public function plante_modif_after(TexteAfter $after, TexteAfterRepository $repository, Request $request, int $plante)
@@ -160,10 +272,109 @@ class HomeControler extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $repository->save($after, true);
 
-            return $this->redirectToRoute('Admin-plante-info', ['id' => $plante]);
+            return $this->redirectToRoute('Admin-plante-info-reponse', ['id' => $plante]);
          }
 
-        return $this->render('Admin/modifplanteafter.html.twig', [
+        return $this->render('Admin/Modif/after.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+    * @Route("/admin/plantes/photo/{id}", name="Admin-plante-info-photo")
+    */
+    
+    public function admin_plantes_info_photos(PhotoRepository $repository, PlanteRepository $repository2, int $id): Response
+    {
+        if (!$this->getUser()){
+            return $this->redirectToRoute('app_login');
+        }
+        $photos = $repository->findBy(array('plante' => $id));
+        $plantes = $repository2->findBy(array('id' => $id));
+        return $this->render('Admin/Info-Plantes/photo.html.twig', [
+            'photos' => $photos, 'plantes' => $plantes,
+        ]);
+    }
+
+    /**
+    * @Route("/admin/plantes/photo/{plante}/{plante2}/ajouter", name="Admin-plantes-photo-ajouter")
+    */
+    
+    public function admin_plantes_photo_ajouter(PlanteRepository $repository, Request $request, EntityManagerInterface $manager,?Plante $plante, int $plante2)
+    {
+        $photo = new Photo();
+        $form = $this->createForm(PhotoType::class, $photo);
+        $form->handleRequest($request);
+        $plantes = $repository->findBy(array('id' => $plante2));
+
+
+        if ($form->isSubmitted()&& $form->isValid()) {
+            $photo = $form->getData();
+            $photo->setPlante($plante);
+            $manager->persist($photo);
+            $manager->flush();
+
+            return $this->redirectToRoute('Admin-plante-info-photo', ['id' => $plante2]);
+         }
+
+        return $this->render('Admin/Ajouter/photo.html.twig', [
+            'form' => $form->createView(), 'plantes' => $plantes,
+        ]);
+    }
+
+    /**
+    * @Route("/admin/plantes/effacer/photo/{plante}/{id}", name="Admin-plante-photo-effacer")
+    */
+    
+    public function plante_effacer_photo(Photo $id, PhotoRepository $repository, EntityManagerInterface $manager, int $plante)
+    {
+        $manager->remove($id);
+        $manager->flush();
+        return $this->redirectToRoute('Admin-plante-info-photo', ['id' => $plante]);
+    }
+
+    /**
+    * @Route("/admin/plantes/modifier/photo/{plante}/{id}", name="Modifier-plante-photo")
+    */
+    
+    public function plante_modif_photos(Photo $photo, PhotoRepository $repository, Request $request, int $plante)
+    {
+        if (!$this->getUser()){
+            return $this->redirectToRoute('app_login');
+        }
+        $form = $this->createForm(PhotoType::class, $photo);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $repository->save($photo, true);
+
+            return $this->redirectToRoute('Admin-plante-info-photo', ['id' => $plante]);
+         }
+
+        return $this->render('Admin/Modif/photo.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+    * @Route("/admin/plantes/modifier/{id}", name="Modifier-plante")
+    */
+    
+    public function plante_modif(Plante $plante, PlanteRepository $repository, Request $request, int $id)
+    {
+        if (!$this->getUser()){
+            return $this->redirectToRoute('app_login');
+        }
+        $form = $this->createForm(PlanteType::class, $plante);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $repository->save($plante, true);
+
+            return $this->redirectToRoute('Admin-plante-info', ['id' => $id]);
+         }
+
+        return $this->render('Admin/Modif/plante.html.twig', [
             'form' => $form->createView(),
         ]);
     }

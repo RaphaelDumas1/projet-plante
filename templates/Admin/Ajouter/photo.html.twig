@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter photo{% endblock %}
+
+{% block header %}
+{% for plante in plantes %}
+    <input type="button" class="button button-deconnexion" value="Retour" onclick="window.location.href='/admin/plantes/{{plante.id}}';">
+{% endfor %}
+    <h1 class="font">Ajouter photo</h1>
+    <input type="button" class="button button-deconnexion" value="Déconnexion" onclick="window.location.href='{{path('app_logout')}}';">
+{% endblock %}
+
+{% block body %}
+<div class="div-center d-flex al-center">
+    <div class="cadre cadre-form d-flex al-center">
+        {{ form_start(form) }}
+            <h2>Photo</h2>
+            <ul style="list-style-type: none">
+                <li>
+                    <label for="">Url de l'image : </label>
+                        {{ form_widget(form.url) }}
+                </li>
+                <div class="d-none">
+                    {{ form_widget(form.plante) }}
+                </div>
+            </ul>
+                <button type="submit" class="button">Créer</button>
+        {{ form_end(form) }}
+    </div>
+</div>
+{% endblock %}

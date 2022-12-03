@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter réponse{% endblock %}
+
+{% block header %}
+{% for plante in plantes %}
+    <input type="button" class="button button-deconnexion" value="Retour" onclick="window.location.href='/admin/plantes/reponse/{{plante.id}}';">
+{% endfor %}
+    <h1 class="font">Ajouter réponse</h1>
+    <input type="button" class="button button-deconnexion" value="Déconnexion" onclick="window.location.href='{{path('app_logout')}}';">
+{% endblock %}
+
+{% block body %}
+<div class="div-center d-flex al-center">
+    <div class="cadre cadre-form d-flex al-center">
+        {{ form_start(form) }}
+            <h2>Texte réponse</h2>
+            <ul style="list-style-type: none">
+                <li>
+                    <label for="">Titre : </label>
+                        {{ form_widget(form.titre) }}
+                </li>
+                <li>
+                    <div class="text-area">
+                        <label for="">Texte : </label>
+                            {{ form_widget(form.texte) }}
+                    </div>
+                </li>
+                    <label for="">Url du logo : </label>
+                        {{ form_widget(form.logo) }}
+                <div class="d-none">
+                    {{ form_widget(form.plante) }}
+                </div>
+            </ul>
+                <button type="submit" class="button">Créer</button>
+        {{ form_end(form) }}
+    </div>
+</div>
+{% endblock %}
