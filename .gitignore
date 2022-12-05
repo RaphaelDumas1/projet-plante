@@ -8,8 +8,8 @@
 /public/bundles/
 /var/
 /vendor/
-/ RaphController.php
-/ raph
+/RaphController.php
+/raph
 ###< symfony/framework-bundle ###
 
 ###> phpunit/phpunit ###
