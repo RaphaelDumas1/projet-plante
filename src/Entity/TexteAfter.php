@@ -14,18 +14,18 @@ class TexteAfter
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 75)]
-    private ?string $titre = null;
-
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $texte = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $logo = null;
-
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?Plante $plante = null;
+
+    #[ORM\Column(length: 75, nullable: true)]
+    private ?string $titre = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $texte = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $logo = null;
 
 
     public function getId(): ?int
@@ -33,12 +33,24 @@ class TexteAfter
         return $this->id;
     }
 
+    public function getPlante(): ?Plante
+    {
+        return $this->plante;
+    }
+
+    public function setPlante(?Plante $plante): self
+    {
+        $this->plante = $plante;
+
+        return $this;
+    }
+
     public function getTitre(): ?string
     {
         return $this->titre;
     }
 
-    public function setTitre(string $titre): self
+    public function setTitre(?string $titre): self
     {
         $this->titre = $titre;
 
@@ -50,7 +62,7 @@ class TexteAfter
         return $this->texte;
     }
 
-    public function setTexte(string $texte): self
+    public function setTexte(?string $texte): self
     {
         $this->texte = $texte;
 
@@ -62,21 +74,9 @@ class TexteAfter
         return $this->logo;
     }
 
-    public function setLogo(string $logo): self
+    public function setLogo(?string $logo): self
     {
         $this->logo = $logo;
-
-        return $this;
-    }
-
-    public function getPlante(): ?Plante
-    {
-        return $this->plante;
-    }
-
-    public function setPlante(?Plante $plante): self
-    {
-        $this->plante = $plante;
 
         return $this;
     }
