@@ -17,6 +17,9 @@
             <input type="button" class="button" value="Détail photo" onclick="window.location.href='/admin/plantes/photo/{{plante.id}}';">
             <input type="button" class="button" value="Effacer" onclick="window.location.href='/admin/plantes/effacer/{{plante.id}}';">
         {% endif %}
+        {% if plante.Active == 0 %}
+            <input type="button" class="button" value="Remettre en jeu" onclick="window.location.href='/admin/plantes/remettre/{{plante.id}}';">
+        {% endif %}
     {% endfor %}
 <div class="div-center div-center-plante d-flex al-center">
     <div class="cadre d-flex al-center">

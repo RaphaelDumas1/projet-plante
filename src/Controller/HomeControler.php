@@ -391,6 +391,21 @@ class HomeControler extends AbstractController
         $plante->setActive(0);
         $repository->save($plante, true);
 
-        return $this->redirectToRoute('Admin-plantes'); 
+        return $this->redirectToRoute('Admin-plantes-ancienne'); 
+    }
+
+        /**
+    * @Route("/admin/plantes/remettre/{id}", name="Remettre-plante")
+    */
+    
+    public function plante_remettre(PlanteRepository $repository, Plante $plante, int $id)
+    {
+        if (!$this->getUser()){
+            return $this->redirectToRoute('app_login');
+        }
+        $plante->setActive(1);
+        $repository->save($plante, true);
+
+        return $this->redirectToRoute('Admin-plante-info', ['id' => $id]);
     }
 }
