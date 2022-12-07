@@ -13,11 +13,14 @@ use App\Repository\PlanteRepository;
 use App\Repository\TexteBeforeRepository;
 use App\Repository\TexteAfterRepository;
 use App\Repository\PhotoRepository;
+use App\Repository\UserRepository;
+use App\Repository\PlanteCompteRepository;
 
 use App\Entity\Plante;
 use App\Entity\TexteBefore;
 use App\Entity\TexteAfter;
 use App\Entity\Photo;
+use App\Entity\PlanteCompte;
 
 use App\Form\PlanteType;
 use App\Form\TexteBeforeType;
@@ -93,7 +96,7 @@ class HomeControler extends AbstractController
             return $this->redirectToRoute('Admin-plante-info', ['id' => $plante->getId()]);
          }
 
-        return $this->render('Admin/Ajouter/plante.html.twig', [
+        return $this->render('Admin/Plantes/Ajouter/plante.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -124,7 +127,7 @@ class HomeControler extends AbstractController
         $text_before = $repository2->findBy(array('plante' => $id));
         $text_after = $repository3->findBy(array('plante' => $id));
         $photos = $repository4->findBy(array('plante' => $id));
-        return $this->render('Admin/Info-Plantes/info.html.twig', [
+        return $this->render('Admin/Plantes/Info/info.html.twig', [
             'plantes' => $plantes, 'text_before' => $text_before, 'text_after' => $text_after, 'photos' => $photos,
         ]);
     }
@@ -140,7 +143,7 @@ class HomeControler extends AbstractController
         }
         $text_before = $repository->findBy(array('plante' => $id));
         $plantes = $repository2->findBy(array('id' => $id));
-        return $this->render('Admin/Info-Plantes/indice.html.twig', [
+        return $this->render('Admin/Plantes/Info/indice.html.twig', [
             'text_before' => $text_before, 'plantes' => $plantes,
         ]);
     }
@@ -166,7 +169,7 @@ class HomeControler extends AbstractController
             return $this->redirectToRoute('Admin-plante-info-indice', ['id' => $plante2]);
          }
 
-        return $this->render('Admin/Ajouter/before.html.twig', [
+        return $this->render('Admin/Plantes/Ajouter/before.html.twig', [
             'form' => $form->createView(), 'plantes' => $plantes,
         ]);
     }
@@ -199,7 +202,7 @@ class HomeControler extends AbstractController
             return $this->redirectToRoute('Admin-plante-info-indice', ['id' => $plante]);
          }
 
-        return $this->render('Admin/Modif/before.html.twig', [
+        return $this->render('Admin/Plantes/Modif/before.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -215,7 +218,7 @@ class HomeControler extends AbstractController
         }
         $text_after = $repository->findBy(array('plante' => $id));
         $plantes = $repository2->findBy(array('id' => $id));
-        return $this->render('Admin/Info-Plantes/reponse.html.twig', [
+        return $this->render('Admin/Plantes/Info/reponse.html.twig', [
             'text_after' => $text_after, 'plantes' => $plantes,
         ]);
     }
@@ -241,7 +244,7 @@ class HomeControler extends AbstractController
             return $this->redirectToRoute('Admin-plante-info-reponse', ['id' => $plante2]);
          }
 
-        return $this->render('Admin/Ajouter/after.html.twig', [
+        return $this->render('Admin/Plantes/Ajouter/after.html.twig', [
             'form' => $form->createView(), 'plantes' => $plantes,
         ]);
     }
@@ -275,7 +278,7 @@ class HomeControler extends AbstractController
             return $this->redirectToRoute('Admin-plante-info-reponse', ['id' => $plante]);
          }
 
-        return $this->render('Admin/Modif/after.html.twig', [
+        return $this->render('Admin/Plantes/Modif/after.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -291,7 +294,7 @@ class HomeControler extends AbstractController
         }
         $photos = $repository->findBy(array('plante' => $id));
         $plantes = $repository2->findBy(array('id' => $id));
-        return $this->render('Admin/Info-Plantes/photo.html.twig', [
+        return $this->render('Admin/Plantes/Info/photo.html.twig', [
             'photos' => $photos, 'plantes' => $plantes,
         ]);
     }
@@ -317,7 +320,7 @@ class HomeControler extends AbstractController
             return $this->redirectToRoute('Admin-plante-info-photo', ['id' => $plante2]);
          }
 
-        return $this->render('Admin/Ajouter/photo.html.twig', [
+        return $this->render('Admin/Plantes/Ajouter/photo.html.twig', [
             'form' => $form->createView(), 'plantes' => $plantes,
         ]);
     }
@@ -351,7 +354,7 @@ class HomeControler extends AbstractController
             return $this->redirectToRoute('Admin-plante-info-photo', ['id' => $plante]);
          }
 
-        return $this->render('Admin/Modif/photo.html.twig', [
+        return $this->render('Admin/Plantes/Modif/photo.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -374,7 +377,7 @@ class HomeControler extends AbstractController
             return $this->redirectToRoute('Admin-plante-info', ['id' => $id]);
          }
 
-        return $this->render('Admin/Modif/plante.html.twig', [
+        return $this->render('Admin/Plantes/Modif/plante.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -394,7 +397,7 @@ class HomeControler extends AbstractController
         return $this->redirectToRoute('Admin-plantes-ancienne'); 
     }
 
-        /**
+    /**
     * @Route("/admin/plantes/remettre/{id}", name="Remettre-plante")
     */
     
@@ -407,5 +410,33 @@ class HomeControler extends AbstractController
         $repository->save($plante, true);
 
         return $this->redirectToRoute('Admin-plante-info', ['id' => $id]);
+    }
+
+    /**
+    * @Route("/admin/compte", name="Admin-compte")
+    */
+    public function admin_compte(UserRepository $repository): Response
+    {
+        if (!$this->getUser()){
+            return $this->redirectToRoute('app_login');
+        }
+        $comptes = $repository->findAll();
+        return $this->render('Admin/compte.html.twig', ['comptes' => $comptes]);
+    }
+
+    /**
+    * @Route("/admin/compte/{id}", name="Admin-compte-info")
+    */
+    
+    public function admin_compte_info(UserRepository $repository, int $id, PlanteCompteRepository $repository2): Response
+    {
+        if (!$this->getUser()){
+            return $this->redirectToRoute('app_login');
+        }
+        $comptes = $repository->findBy(array('id' => $id));
+        $plantes_comptes = $repository2->findBy(array('user' => $id));
+        return $this->render('Admin/Compte/Info/info.html.twig', [
+            'comptes' => $comptes, 'plantes_comptes' => $plantes_comptes,
+        ]);
     }
 }
