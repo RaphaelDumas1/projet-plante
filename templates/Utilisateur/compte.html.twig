@@ -3,7 +3,7 @@
 {% block title %}Home{% endblock %}
 
 {% block header %}
-<input type="button" class="button button-deconnexion" value="Retour" onclick="window.location.href='{{path('Menu')}}';">
+    <input type="button" class="button button-deconnexion" value="Retour" onclick="window.location.href='{{path('Menu')}}';">
     <h1 class="en-tete">Cherche et Trouve</h1>
     <input type="button" class="button button-deconnexion" value="Déconnexion" onclick="window.location.href='{{path('app_logout')}}';">
 {% endblock %}
@@ -16,6 +16,8 @@
         <p>Email : {{ app.user.email }}</p>
         <p>Niveau : {{ app.user.Niveau }}</p>
         <input type="button" class="button" value="Modifier profil" onclick="window.location.href='{{path('compte-modifier')}}';">
+        <input type="button" class="button" value="Modifier mot de passe" onclick="window.location.href='{{path('compte-modifier-mdp')}}';">
+        <input type="button" class="button button-deconnexion" value="Effacer compte" onclick="window.location.href='{{path('compte-effacer')}}';">
     </div>
 </div>
 {% endblock %}
