@@ -3,7 +3,7 @@
 {% block title %}Home{% endblock %}
 
 {% block header %}
-    <input type="button" class="button button-deconnexion" value="Retour" onclick="window.location.href='{{path('compte')}}';">
+    <input type="button" class="button button-deconnexion" value="Annuler" onclick="window.location.href='{{path('compte')}}';">
     <h1 class="en-tete">Cherche et Trouve</h1>
     <input type="button" class="button button-deconnexion" value="Déconnexion" onclick="window.location.href='{{path('app_logout')}}';">
 {% endblock %}
@@ -14,18 +14,6 @@
         {{ form_start(form) }}
             <h2>Mot de passe</h2>
             <ul style="list-style-type: none">
-                <div class="d-none">
-                    <label for="">Email : </label>
-                        {{ form_widget(form.email) }}
-                </div>
-                <div class="d-none">
-                    <label for="">Nom : </label>
-                        {{ form_widget(form.pseudo) }}
-                </div>
-                <div class="d-none">
-                    <label for="">Photo de profil: </label>
-                        {{ form_widget(form.photo) }}
-                </div>
                 <li>
                     {{ form_widget(form.password) }}
                 </li>

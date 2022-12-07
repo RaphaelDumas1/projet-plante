@@ -61,7 +61,7 @@ class UserController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
         $user = $this->getUser();
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserPasswordType::class, $user);
         $form->handleRequest($request);
 
 
