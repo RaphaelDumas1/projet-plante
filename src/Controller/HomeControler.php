@@ -21,11 +21,13 @@ use App\Entity\TexteBefore;
 use App\Entity\TexteAfter;
 use App\Entity\Photo;
 use App\Entity\PlanteCompte;
+use App\Entity\User;
 
 use App\Form\PlanteType;
 use App\Form\TexteBeforeType;
 use App\Form\TexteAfterType;
 use App\Form\PhotoType;
+use App\Form\UserType;
 
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -438,5 +440,35 @@ class HomeControler extends AbstractController
         return $this->render('Admin/Compte/Info/info.html.twig', [
             'comptes' => $comptes, 'plantes_comptes' => $plantes_comptes,
         ]);
+    }
+
+    /**
+    * @Route("/admin/compte/plante/{id}/{plante}", name="Admin-compte-info-plante")
+    */
+    
+    public function admin_compte_info_plante(UserRepository $repository, int $id, PlanteCompteRepository $repository2, ?Plante $plante): Response
+    {
+        if (!$this->getUser()){
+            return $this->redirectToRoute('app_login');
+        }
+        $comptes = $repository->findBy(array('id' => $id));
+        $plantes_comptes = $repository2->findBy(array('user' => $id, 'plante' => $plante));
+        return $this->render('Admin/Compte/Info/plante.html.twig', [
+            'comptes' => $comptes, 'plantes_comptes' => $plantes_comptes,
+        ]);
+    }
+
+    /**
+    * @Route("/admin/compte/effacer/{id}", name="Admin-Effacer-compte")
+    */
+    
+    public function admin_effacer_compte(User $id, UserRepository $repository,PlanteCompteRepository $repository2, EntityManagerInterface $manager)
+    {
+        if (!$this->getUser()){
+            return $this->redirectToRoute('app_login');
+        }
+        $manager->remove($id);
+        $manager->flush();
+        return $this->redirectToRoute('Admin-compte');
     }
 }

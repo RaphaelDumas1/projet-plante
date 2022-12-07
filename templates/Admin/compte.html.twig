@@ -11,7 +11,7 @@
 {% block body %}
 <div class="div-center d-flex al-center">
     <div class="cadre cadre-button al-center d-flex">
-        <input type="button" class="button" value="Ajouter un compte" onclick="window.location.href='{{path('Admin-plantes-ajouter')}}';">
+        <input type="button" class="button" value="Ajouter un compte" onclick="window.location.href='';">
     </div>
     {% for compte in comptes %}
         <input type="button" class="button" value="{{compte.email}}" onclick="window.location.href='/admin/compte/{{compte.id}}';">

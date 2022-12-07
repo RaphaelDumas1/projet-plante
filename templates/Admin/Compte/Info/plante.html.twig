@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Compte - Plante{% endblock %}
+
+{% block header %}
+    {% for compte in comptes %}
+        <input type="button" class="button button-deconnexion" value="Retour" onclick="window.location.href='/admin/compte/{{compte.id}}';">
+    {% endfor %}
+    {% for plante_compte in plantes_comptes %}<h1 class="en-tete">{{plante_compte.plante}}</h1>{% endfor %}
+    <input type="button" class="button button-deconnexion" value="Déconnexion" onclick="window.location.href='{{path('app_logout')}}';">
+{% endblock %}
+
+{% block body %}
+<div class="div-center div-center-plante d-flex al-center">
+    <div class="cadre d-flex al-center">
+        <div>
+            {% for plante_compte in plantes_comptes %}
+                <img class="logo" src="{{plante_compte.photo}}">
+                <div>
+                    <h2>Coordonnée</h2>
+                    <p>Longitude : {{plante_compte.longitude}}</p>
+                    <p>Latitude : {{plante_compte.latitude}}</p>
+                </div>
+                <div>
+                    <h2>Date</h2>
+                    <p>Photo :{{plante_compte.datephoto.format('d F Y')}}</p>
+                    <p>Valide :{{plante_compte.datevalide.format('d F Y')}}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
