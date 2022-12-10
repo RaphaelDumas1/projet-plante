@@ -128,16 +128,33 @@ class UserController extends AbstractController
     }
 
     /**
-    * @Route("/stats/date", name="compte-stat-date")
+    * @Route("/stats/date/croissant", name="compte-stat-date-croissant")
     */
-    public function compte_stat_date(PlanteCompteRepository $repository, PlanteRepository $repository2): Response
+    public function compte_stat_date_croissant(PlanteCompteRepository $repository, PlanteRepository $repository2): Response
     {
         if (!$this->getUser()){
             return $this->redirectToRoute('app_login');
         }
-        $tri = "date";
+        $tri = "date-croissant";
         $user = $this->getUser();
         $plantes_comptes = $repository->findBy(array('user' => $user),array('date_valide' => 'ASC'));
+        $plantes = $repository2->findAll();
+        return $this->render('Utilisateur/comptestat.html.twig', [
+            'plantes_comptes' => $plantes_comptes, 'plantes' => $plantes, 'tri' => $tri,
+        ]);
+    }
+
+    /**
+    * @Route("/stats/date/decroissant", name="compte-stat-date-decroissant")
+    */
+    public function compte_stat_date_decroissant(PlanteCompteRepository $repository, PlanteRepository $repository2): Response
+    {
+        if (!$this->getUser()){
+            return $this->redirectToRoute('app_login');
+        }
+        $tri = "date-decroissant";
+        $user = $this->getUser();
+        $plantes_comptes = $repository->findBy(array('user' => $user),array('date_valide' => 'DESC'));
         $plantes = $repository2->findAll();
         return $this->render('Utilisateur/comptestat.html.twig', [
             'plantes_comptes' => $plantes_comptes, 'plantes' => $plantes, 'tri' => $tri,

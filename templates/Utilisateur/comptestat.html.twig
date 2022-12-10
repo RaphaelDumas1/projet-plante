@@ -18,20 +18,24 @@
 <div class="div-center div-center-plante d-flex al-center">
     <div class="cadre d-flex al-center">
         <div>
-        {% if tri == "nom" %}
-            <input type="button" class="button" value="Trier par date d'obtention" onclick="window.location.href='{{path('compte-stat-date')}}';">
-        {% endif %}
-        {% if tri == "date" %}
             <input type="button" class="button" value="Trier par ordre alphabétique" onclick="window.location.href='{{path('compte-stat')}}';">
-        {% endif %}
+            <input type="button" class="button" value="Trier par date d'obtention croissant" onclick="window.location.href='{{path('compte-stat-date-croissant')}}';">
+            <input type="button" class="button" value="Trier par date d'obtention décroissant" onclick="window.location.href='{{path('compte-stat-date-decroissant')}}';">
             <div id="map"></div>
-            {% for plante in plantes %}
-                {% for plante_compte in plantes_comptes %}
-                    {% if plante_compte.plante.id == plante.id %}
-                        <input type="button" class="button" value="{{plante.nom}} - {{plante_compte.datevalide.format('d F Y')}}" onclick="window.location.href='/stats/info/{{plante_compte.id}}';"> 
-                    {% endif %}
+            {% if tri == "nom" %}
+                {% for plante in plantes %}
+                    {% for plante_compte in plantes_comptes %}
+                        {% if plante_compte.plante.id == plante.id %}
+                            <input type="button" class="button" value="{{plante.nom}} - {{plante_compte.datevalide.format('d F Y')}}" onclick="window.location.href='/stats/info/{{plante_compte.id}}';"> 
+                        {% endif %}
+                    {% endfor %}
                 {% endfor %}
-            {% endfor %}
+            {% endif %}
+            {% if tri == "date-croissant" or tri == "date-decroissant" %}
+                {% for plante_compte in plantes_comptes %}
+                        <input type="button" class="button" value="{{plante_compte.plante.nom}} - {{plante_compte.datevalide.format('d F Y')}}" onclick="window.location.href='/stats/info/{{plante_compte.id}}';"> 
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
 </div>
