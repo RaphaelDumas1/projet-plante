@@ -13,8 +13,9 @@
     <div class="cadre d-flex al-center">
         <div>
             {% for compte in comptes %}
-                <p>{{compte.pseudo}}</p>
-                <p>{{compte.niveau}}</p>
+                <p>Nom : {{compte.pseudo}}</p>
+                <p>Niveau : {{compte.niveau}}</p>
+                <p>Nombre de plante trouvé : {{plantes_comptes|length}}</p>
                 <img class="icone" src="{{compte.photo}}">
             {% endfor %}
         </div>
