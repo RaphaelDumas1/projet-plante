@@ -6,9 +6,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 use Doctrine\ORM\EntityManagerInterface;
-
+use Psr\Log\LoggerInterface;
+use Symfony\Component\Validator\Constraints\DateTime;
 use App\Repository\PlanteRepository;
 use App\Repository\TexteBeforeRepository;
 use App\Repository\TexteAfterRepository;
@@ -29,6 +31,12 @@ use App\Form\PhotoType;
 
 use Doctrine\Persistence\ManagerRegistry;
 
+use App\Service\RandomPlantGenerator;
+use App\Service\DecodeBase64;
+use App\Service\NameImage;
+use App\Service\CreateFullPlanteCompte;
+use App\Service\CreateFullPhoto;
+use App\Service\GetPlantWithName;
 
 class HomeControler extends AbstractController
 {
@@ -438,5 +446,44 @@ class HomeControler extends AbstractController
         return $this->render('Admin/Compte/Info/info.html.twig', [
             'comptes' => $comptes, 'plantes_comptes' => $plantes_comptes,
         ]);
+    }
+
+     /**
+    * @Route("/jouer", name="jouer")
+    */
+    public function jouer(RandomPlantGenerator $random_plant, PlanteRepository $plantRepository, 
+    TexteBeforeRepository $textBeforeRepository, UserInterface $user, PlanteCompteRepository $planteCompteRepository, 
+    PhotoRepository $photoRepository): Response
+    {   
+        $randPlant = $random_plant->randomPlant($plantRepository, $textBeforeRepository, $user, $planteCompteRepository);
+        $plante = $randPlant[0];
+        $texteBefore = $randPlant[1];
+        return $this->render('jouer.html.twig', ["plante" => $plante, "infos" => $texteBefore]);
+    }
+    
+        /**
+    * @Route("/plantes_upload_image", name="upload-plante")
+    */
+    
+    public function plant_image_uploader(Request $request, LoggerInterface $logger, EntityManagerInterface $manager, 
+    PhotoRepository $photoRepository,  UserInterface $user, DecodeBase64 $decodeImage, NameImage $nameImage,
+    CreateFullPhoto $createPhoto, CreateFullPlanteCompte $createPlanteCompte, PlanteRepository $planteRepository,
+    GetPlantWithName $getPlant) 
+    {   
+        if ($request->isXmlHttpRequest()){
+            $image = $request->query->get('image_url');
+            $longitude = $request->query->get('longitude');
+            $latitude = $request->query->get('latitude');
+            $nom_plante = $request->query->get('nom_plante');
+            $datePhoto = $request->query->get('date_photo');
+            $dateValide = $request->query->get('date_valide');
+            $datePhoto = strval($datePhoto);
+            $plante = $getPlant->getPlant($nom_plante, $planteRepository);
+            $image = $decodeImage->decode($image);
+            $nom_fichier = $nameImage->name($plante, $photoRepository);    
+            file_put_contents($nom_fichier, $image);
+            $createPlanteCompte->create($manager, $plante, $nom_fichier, $user, $longitude, $latitude, $datePhoto, $dateValide);
+            $createPhoto->create($nom_fichier, $plante, $manager);
+        }
     }
 }
