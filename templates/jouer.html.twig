@@ -4,14 +4,16 @@
 {% block body %}   
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
         {% for info in infos %}
-            <p>{{ info.texte }}</p>
+            <p class="texte">{{ info.texte }}</p>
         {% endfor %}
         <div id="div1"></div>
-        <button id="boutton-camera">Activer l'appareil</button>
+        <div id="div2" class="flex-col-around h-90">
+        <button id="boutton-camera" class="button">Activer l'appareil</button>
         <video id="camera" width="320" height="240" autoplay></video>
-        <button id="boutton-photo" class="d-none">Click Photo</button>
-        <button onclick="uploadFile()" class="d-none">upload</button>
+        <button id="boutton-photo" class="d-none button">Prendre une photo</button>
         <canvas id="photo" name="photo" width="320" height="240"></canvas>
+        <button id="boutton-upload" onclick="uploadFile()" class="d-none button">upload</button>
         <div id="ajax-path" ajax-path="{{ path('upload-plante') }}"></div>
+        </div>
         <script src="{{ asset('JS/app.js') }}"></script>
 {% endblock %}
