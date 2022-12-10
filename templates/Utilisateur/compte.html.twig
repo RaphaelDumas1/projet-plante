@@ -11,10 +11,11 @@
 {% block body %}
 <div class="div-center d-flex al-center">
     <div class="cadre al-center d-flex">
+        <p>Niveau : {{ app.user.Niveau }}</p>
+        <p>Nombre de plante trouvé : {{plantes_comptes|length}}</p>
         <p>Photo de profil : <img class="icone" src="{{ app.user.photo }}"></p>
         <p>Nom : {{ app.user.pseudo }}</p>
         <p>Email : {{ app.user.email }}</p>
-        <p>Niveau : {{ app.user.Niveau }}</p>
         <input type="button" class="button" value="Modifier profil" onclick="window.location.href='{{path('compte-modifier')}}';">
         <input type="button" class="button" value="Modifier mot de passe" onclick="window.location.href='{{path('compte-modifier-mdp')}}';">
         <input type="button" class="button button-deconnexion" value="Effacer compte" onclick="window.location.href='{{path('compte-effacer')}}';">

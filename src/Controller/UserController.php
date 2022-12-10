@@ -25,12 +25,16 @@ class UserController extends AbstractController
     /**
     * @Route("/Compte", name="compte")
     */
-    public function compte(): Response
+    public function compte(PlanteCompteRepository $repository): Response
     {
         if (!$this->getUser()){
             return $this->redirectToRoute('app_login');
         }
-        return $this->render('Utilisateur/compte.html.twig');
+        $user = $this->getUser();
+        $plantes_comptes = $repository->findBy(array('user' => $user));
+        return $this->render('Utilisateur/compte.html.twig', [
+            'plantes_comptes' => $plantes_comptes,
+        ]);
     }
 
     /**
