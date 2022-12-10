@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Statistique{% endblock %}
+
+{% block header %}
+    <input type="button" class="button button-deconnexion" value="Retour" onclick="window.location.href='{{path('Menu')}}';">
+    <h1 class="en-tete">Statistique</h1>
+    <input type="button" class="button button-deconnexion" value="Déconnexion" onclick="window.location.href='{{path('app_logout')}}';">
+{% endblock %}
+
+{% block body %}
+<style>
+    #map{
+        height: 50vh;
+        width: 100%;
+    }
+</style>
+<div class="div-center div-center-plante d-flex al-center">
+    <div class="cadre d-flex al-center">
+        <div>
+            <input type="button" class="button" value="Trier par ordre alphabétique" onclick="window.location.href='{{path('compte-stat')}}';">
+            <input type="button" class="button" value="Trier par date d'obtention croissant" onclick="window.location.href='{{path('compte-stat-date-croissant')}}';">
+            <input type="button" class="button" value="Trier par date d'obtention décroissant" onclick="window.location.href='{{path('compte-stat-date-decroissant')}}';">
+            <div id="map"></div>
+            {% if tri == "nom" %}
+                {% for plante in plantes %}
+                    {% for plante_compte in plantes_comptes %}
+                        {% if plante_compte.plante.id == plante.id %}
+                            <input type="button" class="button" value="{{plante.nom}} - {{plante_compte.datevalide.format('d F Y')}}" onclick="window.location.href='/stats/info/{{plante_compte.id}}';"> 
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            {% endif %}
+            {% if tri == "date-croissant" or tri == "date-decroissant" %}
+                {% for plante_compte in plantes_comptes %}
+                        <input type="button" class="button" value="{{plante_compte.plante.nom}} - {{plante_compte.datevalide.format('d F Y')}}" onclick="window.location.href='/stats/info/{{plante_compte.id}}';"> 
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% for plante_compte in plantes_comptes %}
+<script>
+    var map = L.map('map').setView([46.2192649, 2.0517], 5);
+
+    var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    });
+    {% for plante_compte in plantes_comptes %}
+    var maker = L.marker([{{plante_compte.longitude}}, {{plante_compte.latitude}}]).addTo(map)
+    osm.addTo(map);
+    maker.addTo(map);
+    var popup = maker.bindPopup('{{plante_compte.plante.nom}}')
+    popup.addTo(map);
+    {% endfor %}
+</script>
+{% endfor %}
+{% endblock %}

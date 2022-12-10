@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Compte - Plante{% endblock %}
+
+{% block header %}
+    {% for compte in comptes %}
+        <input type="button" class="button button-deconnexion" value="Retour" onclick="window.location.href='/admin/compte/{{compte.id}}';">
+    {% endfor %}
+    {% for plante_compte in plantes_comptes %}<h1 class="en-tete">{{plante_compte.plante}}</h1>{% endfor %}
+    <input type="button" class="button button-deconnexion" value="Déconnexion" onclick="window.location.href='{{path('app_logout')}}';">
+{% endblock %}
+
+{% block body %}
+<style>
+    #map{
+        height: 25vh;
+        width: 25vw;
+    }
+</style>
+<div class="div-center div-center-plante d-flex al-center">
+    <div class="cadre d-flex al-center">
+        {% for plante_compte in plantes_comptes %}
+            <img class="logo" src="{{plante_compte.photo}}">
+            <div>
+                <h2>Coordonnée</h2>
+                <div id="map"></div>
+            </div>
+            <div>
+                <h2>Date</h2>
+                <p>Photo :{{plante_compte.datephoto.format('d F Y')}}</p>
+                <p>Valide :{{plante_compte.datevalide.format('d F Y')}}</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% for plante_compte in plantes_comptes %}
+<script>
+    var map = L.map('map').setView([{{plante_compte.longitude}}, {{plante_compte.latitude}}], 15);
+
+    var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    });
+    var maker = L.marker([{{plante_compte.longitude}}, {{plante_compte.latitude}}]).addTo(map)
+    osm.addTo(map);
+    maker.addTo(map);
+</script>
+{% endfor %}
+{% endblock %}

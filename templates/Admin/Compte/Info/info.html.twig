@@ -3,7 +3,7 @@
 {% block title %}Compte{% endblock %}
 
 {% block header %}
-    <input type="button" class="button button-deconnexion" value="Retour" onclick="window.location.href='{{path('Admin-plantes')}}';">
+    <input type="button" class="button button-deconnexion" value="Retour" onclick="window.location.href='{{path('Admin-compte')}}';">
     {% for compte in comptes %}<h1 class="en-tete">{{compte.email}}</h1>{% endfor %}
     <input type="button" class="button button-deconnexion" value="Déconnexion" onclick="window.location.href='{{path('app_logout')}}';">
 {% endblock %}
@@ -13,22 +13,20 @@
     <div class="cadre d-flex al-center">
         <div>
             {% for compte in comptes %}
-                <p>{{compte.email}}</p>
-                <p>{{compte.niveau}}</p>
-                <p>{{compte.pseudo}}</p>
-                <img class="logo" src="{{compte.photo}}">
+                <p>Nom : {{compte.pseudo}}</p>
+                <p>Niveau : {{compte.niveau}}</p>
+                <p>Nombre de plante trouvé : {{plantes_comptes|length}}</p>
+                <img class="icone" src="{{compte.photo}}">
             {% endfor %}
         </div>
         <div>
             {% for plante_compte in plantes_comptes %}
-                <img class="logo" src="{{plante_compte.photo}}">
-                <p>{{plante_compte.longitude}}</p>
-                <p>{{plante_compte.latitude}}</p>
-                <p>{{plante_compte.plante}}</p>
-                <p>{{plante_compte.datephoto.format('d F Y')}}</p>
-                <p>{{plante_compte.datevalide.format('d F Y')}}</p>
+                {% for compte in comptes %}<input type="button" class="button" value="{{plante_compte.plante}}" onclick="window.location.href='/admin/compte/plante/{{compte.id}}/{{plante_compte.plante.id}}';">{% endfor %}
             {% endfor %}
         </div>
+        {% for compte in comptes %}
+            <input type="button" class="button" value="Effacer Compte" onclick="window.location.href='/admin/compte/effacer/{{compte.id}}';">
+        {% endfor %}
     </div>
 </div>
 {% endblock %}
