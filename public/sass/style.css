@@ -17,8 +17,27 @@
   flex-direction: column;
 }
 
-.h-90 {
+.message-succes {
+  height: 50vh;
+  width: 50vh;
+  background-color: rgba(144, 238, 144, 0.9);
+  border-radius: 20px;
+}
+
+.h-90vh {
   height: 90vh;
+}
+
+.gap-2vh {
+  gap: 2vh;
+}
+
+.margin-t-2vh {
+  margin-top: 2vh;
+}
+
+.margin-b-2vh {
+  margin-bottom: 2vh;
 }
 
 body {
@@ -26,16 +45,43 @@ body {
   background-color: rgba(245, 245, 245, 0.8);
 }
 
-header {
+.cadre-textes {
+  width: 50vh;
   background-color: rgba(144, 238, 144, 0.9);
-  width: 100%;
-  height: 10vh;
-  justify-content: space-around;
+  border: 2px #006600 solid;
+  border-radius: 10px;
+  text-align: center;
 }
 
-.en-tete {
-  font-size: 4vh;
-  font-family: "Caveat", sans-serif;
+.dimensions-jouer, .camera, .cadre-feuille, .container-camera {
+  height: 50vh;
+  width: 50vh;
+}
+
+.container-camera {
+  position: relative;
+  background-color: #006600;
+  border-radius: 20px;
+}
+
+.cadre-feuille {
+  top: 0%;
+  position: absolute;
+  border-radius: 20px;
+  z-index: 1;
+}
+
+.camera {
+  top: 0%;
+  position: absolute;
+}
+
+.photo {
+  position: absolute;
+  width: 100%;
+  height: 75%;
+  top: 12.5%;
+  width: 100%;
 }
 
 .button {
@@ -50,6 +96,71 @@ header {
 }
 .button:hover {
   background-color: #1cbb1c;
+}
+
+.buttons-jouer, .button-reesayer, .button-upload, .button-camera, .button-photo, .button-revoir {
+  position: absolute;
+  z-index: 2;
+  border: none;
+  padding: 0 1vh;
+  border-radius: 10px;
+  background-color: rgb(87, 230, 87);
+  cursor: pointer;
+}
+.buttons-jouer:hover, .button-reesayer:hover, .button-upload:hover, .button-camera:hover, .button-photo:hover, .button-revoir:hover {
+  background-color: #1cbb1c;
+}
+
+.button-revoir {
+  top: 90.5%;
+  left: 30%;
+  height: 7%;
+  width: 40%;
+}
+
+.button-photo {
+  height: 12%;
+  width: 12%;
+  border-radius: 50px;
+  border: 2px solid rgb(87, 230, 87);
+  top: 72%;
+  left: 45%;
+  font-size: 25px;
+  text-align: center;
+}
+
+.button-camera {
+  top: 50%;
+  left: 25%;
+  height: 5vh;
+  width: 50%;
+  cursor: pointer;
+}
+
+.button-upload {
+  top: 90.5%;
+  left: 5%;
+  height: 7%;
+  width: 40%;
+}
+
+.button-reesayer {
+  top: 90.5%;
+  right: 5%;
+  height: 7%;
+  width: 40%;
+}
+
+header {
+  background-color: rgba(144, 238, 144, 0.9);
+  width: 100%;
+  height: 10vh;
+  justify-content: space-around;
+}
+
+.en-tete {
+  font-size: 4vh;
+  font-family: "Caveat", sans-serif;
 }
 
 .button-deconnexion {

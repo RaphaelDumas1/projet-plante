@@ -1,5 +1,5 @@
-$green-color : rgba(144,238,144,0.9);
-$fond-color : rgba(245,245,245, 0.8);
+$green-color : rgba(144, 238, 144, 0.9);
+$fond-color : rgba(245, 245, 245, 0.8);
 $button-color : rgb(87, 230, 87);
 $button-deconnexion-color: rgb(238, 79, 79);
 $title-font: "Caveat", sans-serif;
@@ -9,6 +9,7 @@ $title-font: "Caveat", sans-serif;
         display: $type;
     }
 }
+
 @include display(flex);
 @include display(none);
 
@@ -17,34 +18,97 @@ $title-font: "Caveat", sans-serif;
         align-items: $type;
     }
 }
+
 @include align-items(center);
+
 .flex-col-around {
     display: flex;
     justify-content: space-around;
     align-items: center;
     flex-direction: column;
 }
-.h-90{
-    height : 90vh;
+
+.message-succes{
+    height: 50vh;
+    width: 50vh;
+    background-color: rgba(144, 238, 144, 0.9);
+    border-radius: 20px;
 }
 
+$heights : 90vh;
 
+@each $height in $heights {
+    .h-#{$height} {
+        height: $height;
+    }
+}
+$gaps : 2vh;
 
-body{
+@each $gap in $gaps {
+    .gap-#{$gap} {
+        gap: $gap;
+    }
+}
+
+$margins-tops : 2vh;
+
+@each $margin in $margins-tops {
+    .margin-t-#{$margin} {
+        margin-top: $margin;
+    }
+}
+
+$margins-bots : 2vh;
+@each $margin in $margins-bots {
+    .margin-b-#{$margin} {
+        margin-bottom: $margin;
+    }
+}
+
+body {
     margin: 0;
     background-color: $fond-color;
 }
-header{
+.cadre-textes{
+    width: 50vh;
     background-color: $green-color;
+    border: 2px #006600 solid;
+    border-radius: 10px;
+    text-align: center;
+}
+.dimensions-jouer{
+    height: 50vh;
+    width: 50vh;
+}
+.container-camera {
+    @extend .dimensions-jouer;
+    position: relative;
+    background-color: #006600;
+    border-radius: 20px;
+}
+
+.cadre-feuille {
+    @extend .dimensions-jouer;
+    top: 0%;
+    position: absolute;
+    border-radius: 20px;
+    z-index: 1;
+}
+
+.camera {
+    top: 0%;
+    @extend .dimensions-jouer;
+    position: absolute;
+
+}
+.photo{
+    position: absolute;
     width: 100%;
-    height: 10vh;
-    justify-content: space-around;
+    height: 75%;
+    top : 12.5%;
+    width : 100%;
 }
-.en-tete{
-    font-size: 4vh;
-    font-family: $title-font;
-}
-.button{
+.button {
     border-radius: 20px;
     height: 5vh;
     border: none;
@@ -53,27 +117,98 @@ header{
     background-color: $button-color;
     width: 50vw;
     cursor: pointer;
-    &:hover{
+
+    &:hover {
         background-color: darken($button-color, 20);
     }
 }
-.button-deconnexion{
+.buttons-jouer{
+    position: absolute;
+    z-index: 2;
+    border: none;
+    padding: 0 1vh;
+    border-radius: 10px;
+    background-color: $button-color;
+    cursor: pointer;
+    &:hover {
+        background-color: darken($button-color, 20);
+    }
+}
+.button-revoir{
+    @extend .buttons-jouer;
+    top : 90.5%;
+    left: 30%;
+    height: 7%;
+    width: 40%;
+}
+.button-photo {
+    @extend .buttons-jouer;
+    height: 12%;
+    width: 12%;
+    border-radius: 50px;
+    border: 2px solid $button-color;
+    top: 72%;
+    left: 45%;
+    font-size: 25px;
+    text-align: center;
+}
+.button-camera{
+    @extend .buttons-jouer;
+    top : 50%;
+    left: 25%;
+    height: 5vh;
+    width: 50%;
+    cursor: pointer;
+}
+.button-upload{
+    @extend .buttons-jouer;
+    top : 90.5%;
+    left: 5%;
+    height: 7%;
+    width: 40%;
+}
+
+.button-reesayer{
+    @extend .buttons-jouer;
+    top : 90.5%;
+    right: 5%;
+    height: 7%;
+    width: 40%;
+}
+
+header {
+    background-color: $green-color;
+    width: 100%;
+    height: 10vh;
+    justify-content: space-around;
+}
+
+.en-tete {
+    font-size: 4vh;
+    font-family: $title-font;
+}
+
+.button-deconnexion {
     background-color: $button-deconnexion-color;
     width: 25vw;
-    &:hover{
+
+    &:hover {
         background-color: darken($button-deconnexion-color, 10);
     }
 }
-.icone{
+
+.icone {
     border-radius: 50%;
     height: 8vh;
     width: 12vw;
 }
-.div-center{
+
+.div-center {
     justify-content: center;
     flex-direction: column;
     height: 90vh;
-    &::after{
+
+    &::after {
         content: "";
         top: 0;
         left: 0;
@@ -87,68 +222,86 @@ header{
         opacity: 0.6;
     }
 }
-.div-center-plante{
+
+.div-center-plante {
     height: auto;
     margin: 3vh;
-    &::after{
+
+    &::after {
         height: 150vh;
     }
 }
-.logo{
+
+.logo {
     width: 30vw;
 }
-.cadre{
+
+.cadre {
     flex-direction: column;
     background-color: $fond-color;
     padding: 1vw;
 }
-.texte{
+
+.texte {
     margin: 1vw;
     padding: 2vw;
     text-align: center;
 }
-.text-area > textarea{
+
+.text-area>textarea {
     width: 20vw;
     height: 10vh;
 }
-ul{
+
+ul {
     padding: 0 1vh;
-    li{
+
+    li {
         display: flex;
         justify-content: space-between;
         margin: 3vh 0;
     }
 }
-@media screen and (min-width: 700px){
-    .en-tete{
+
+@media screen and (min-width: 700px) {
+    .en-tete {
         font-size: 6vh;
     }
-    .button{
+
+    .button {
         width: 15vw;
     }
-    .button-deconnexion{
+
+    .button-deconnexion {
         width: 7vw;
     }
-    .logo{
+
+    .logo {
         width: 10vw;
     }
-    .cadre{
+
+    .cadre {
         width: 50%;
     }
-    .cadre-form{
+
+    .cadre-form {
         width: 25%;
     }
-    .cadre-user{
+
+    .cadre-user {
         border-radius: 10%;
     }
-    .cadre-button{
+
+    .cadre-button {
         width: auto;
         flex-direction: row;
     }
-    .texte{
+
+    .texte {
         padding: 0;
     }
-    .icone{
+
+    .icone {
         width: 4vw;
     }
 }

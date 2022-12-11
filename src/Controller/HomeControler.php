@@ -487,10 +487,11 @@ class HomeControler extends AbstractController
     TexteBeforeRepository $textBeforeRepository, UserInterface $user, PlanteCompteRepository $planteCompteRepository, 
     PhotoRepository $photoRepository): Response
     {   
-        $randPlant = $random_plant->randomPlant($plantRepository, $textBeforeRepository, $user, $planteCompteRepository);
+        $randPlant = $random_plant->randomPlant($plantRepository, $textBeforeRepository, $user, $planteCompteRepository, $photoRepository);
         $plante = $randPlant[0];
         $texteBefore = $randPlant[1];
-        return $this->render('jouer.html.twig', ["plante" => $plante, "infos" => $texteBefore]);
+        $photo = $randPlant[2];
+        return $this->render('jouer.html.twig', ["plante" => $plante, "infos" => $texteBefore, "photo" => $photo]);
     }
     
         /**
@@ -513,9 +514,19 @@ class HomeControler extends AbstractController
             $plante = $getPlant->getPlant($nom_plante, $planteRepository);
             $image = $decodeImage->decode($image);
             $nom_fichier = $nameImage->name($plante, $photoRepository);    
-            file_put_contents($nom_fichier, $image);
+            file_put_contents((dirname(__FILE__, 3)."/public/ImagePlantes/".$nom_fichier), $image);
             $createPlanteCompte->create($manager, $plante, $nom_fichier, $user, $longitude, $latitude, $datePhoto, $dateValide);
             $createPhoto->create($nom_fichier, $plante, $manager);
         }
+        return new Response();
     }
+
+    /**
+     * @Route("/phpinfo", name="phpinfo")
+     */
+    public function phpinfoAction()
+    {
+		return new Response('<html><body>'.phpinfo().'</body></html>');
+    }
+
 }

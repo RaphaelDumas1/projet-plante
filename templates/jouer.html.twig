@@ -1,19 +1,29 @@
 {% extends 'base.html.twig' %}
-{% block header %}<h1 id="nom_plante" name="nom_plante">{{ plante.nom }}</h1>
+{% block header %}<h1 id="nom_plante" name="nom_plante">{{plante.nom}}</h1>
 {% endblock %}
-{% block body %}   
+{% block body %} 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+        <div class="flex-col-around gap-2vh margin-t-2vh margin-b-2vh">
         {% for info in infos %}
-            <p class="texte">{{ info.texte }}</p>
+            <div class="cadre-textes">
+            <p class="texte" id="infos">{{ info.texte }}</p>
+            </div>
         {% endfor %}
-        <div id="div1"></div>
+        </div>
         <div id="div2" class="flex-col-around h-90">
-        <button id="boutton-camera" class="button">Activer l'appareil</button>
-        <video id="camera" width="320" height="240" autoplay></video>
-        <button id="boutton-photo" class="d-none button">Prendre une photo</button>
-        <canvas id="photo" name="photo" width="320" height="240"></canvas>
-        <button id="boutton-upload" onclick="uploadFile()" class="d-none button">upload</button>
-        <div id="ajax-path" ajax-path="{{ path('upload-plante') }}"></div>
+            <div id="div1" class="message-succes d-none"></div>
+            <div class="container-camera" id="container-camera">
+                <img src="/ImagePlantes/{{photo}}" id="photo-plante" class="cadre-feuille"></img>
+                <button id="boutton-camera" class="button-camera">Activer l'appareil</button>
+                <video id="camera" class="camera" autoplay></video>
+                <button id="boutton-photo" class="d-none button-photo">📷</button>
+                <img id="cadre-feuille" class="cadre-feuille d-none" src="/Image/cadre-feuille.png"></img>
+                <canvas id="photo" name="photo" class="photo d-none"></canvas>
+                <button id="boutton-upload" onclick="uploadFile()" class="d-none button-upload">Valider la plante</button>
+                <button id="boutton-reesayer" class="d-none button-reesayer">Reesayer</button>
+                <button id="boutton-revoir" class="d-none button-revoir">Revoir la plante</button>
+            </div>
+            <div id="ajax-path" ajax-path="{{ path('upload-plante') }}"></div>
         </div>
         <script src="{{ asset('JS/app.js') }}"></script>
 {% endblock %}
