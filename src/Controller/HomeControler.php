@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Validator\Constraints\DateTime;
 use App\Repository\PlanteRepository;
@@ -30,6 +32,7 @@ use App\Form\TexteBeforeType;
 use App\Form\TexteAfterType;
 use App\Form\PhotoType;
 use App\Form\UserType;
+use App\Form\UserAdminType;
 
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -432,6 +435,36 @@ class HomeControler extends AbstractController
         }
         $comptes = $repository->findAll();
         return $this->render('Admin/compte.html.twig', ['comptes' => $comptes]);
+    }
+
+    /**
+    * @Route("/admin/compte/ajouter", name="Admin-compte-ajouter")
+    */
+    
+    public function admin_compte_ajouter(Request $request, EntityManagerInterface $manager, UserPasswordHasherInterface $userPasswordHasher)
+    {
+        $user = new User();
+        $form = $this->createForm(UserAdminType::class, $user);
+        $form->handleRequest($request);
+
+
+        if ($form->isSubmitted()&& $form->isValid()) {
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $form->get('password')->getData()
+                )
+            );
+            $user->setNiveau(1);
+            $manager->persist($user);
+            $manager->flush();
+
+            return $this->redirectToRoute('Admin-compte');
+         }
+
+        return $this->render('Admin/Compte/Ajouter/compte.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
     /**

@@ -1,6 +1,13 @@
 {% extends 'base.html.twig' %}
-{% block header %}<h1 id="nom_plante" name="nom_plante">{{plante.nom}}</h1>
+
+{% block title %}Cherche et Trouve{% endblock %}
+
+{% block header %}
+    <input type="button" class="button button-deconnexion" value="Retour" onclick="window.location.href='{{path('Menu')}}';">
+    <h1 id="nom_plante" class="en-tete" name="nom_plante">{{plante.nom}}</h1>
+    <img class="icone" src="{{ app.user.photo }}" onclick="window.location.href='{{path('compte')}}';">
 {% endblock %}
+
 {% block body %} 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
         <div class="flex-col-around gap-2vh margin-t-2vh margin-b-2vh">
@@ -20,7 +27,7 @@
                 <img id="cadre-feuille" class="cadre-feuille d-none" src="/Image/cadre-feuille.png"></img>
                 <canvas id="photo" name="photo" class="photo d-none"></canvas>
                 <button id="boutton-upload" onclick="uploadFile()" class="d-none button-upload">Valider la plante</button>
-                <button id="boutton-reesayer" class="d-none button-reesayer">Reesayer</button>
+                <button id="boutton-reesayer" class="d-none button-reesayer">Réessayer</button>
                 <button id="boutton-revoir" class="d-none button-revoir">Revoir la plante</button>
             </div>
             <div id="ajax-path" ajax-path="{{ path('upload-plante') }}"></div>

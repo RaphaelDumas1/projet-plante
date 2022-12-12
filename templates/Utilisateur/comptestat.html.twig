@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Statistique{% endblock %}
+{% block title %}Statistiques{% endblock %}
 
 {% block header %}
     <input type="button" class="button button-deconnexion" value="Retour" onclick="window.location.href='{{path('Menu')}}';">
-    <h1 class="en-tete">Statistique</h1>
+    <h1 class="en-tete">Statistiques</h1>
     <input type="button" class="button button-deconnexion" value="Déconnexion" onclick="window.location.href='{{path('app_logout')}}';">
 {% endblock %}
 
@@ -47,7 +47,7 @@
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     });
     {% for plante_compte in plantes_comptes %}
-    var maker = L.marker([{{plante_compte.longitude}}, {{plante_compte.latitude}}]).addTo(map)
+    var maker = L.marker([{{plante_compte.latitude}}, {{plante_compte.longitude}}]).addTo(map)
     osm.addTo(map);
     maker.addTo(map);
     var popup = maker.bindPopup('{{plante_compte.plante.nom}}')

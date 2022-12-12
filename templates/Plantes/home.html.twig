@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Cherche et Trouve{% endblock %}
 
 {% block header %}
     <input type="button" class="button button-deconnexion" value="Déconnexion" onclick="window.location.href='{{path('app_logout')}}';">
@@ -10,6 +10,7 @@
 
 {% block body %}
 <div class="div-center d-flex al-center">
-    <input type="button" class="button" value="Statistique" onclick="window.location.href='{{path('compte-stat')}}';">
+    <input type="button" class="button" value="Jouer" onclick="window.location.href='{{path('jouer')}}';">
+    <input type="button" class="button" value="Statistiques" onclick="window.location.href='{{path('compte-stat')}}';">
 </div>
 {% endblock %}

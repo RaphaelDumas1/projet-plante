@@ -20,7 +20,6 @@
 <div class="div-center div-center-plante d-flex al-center">
     <div class="cadre d-flex al-center">
         {% for plante_compte in plantes_comptes %}
-            <img class="logo" src="{{plante_compte.photo}}">
             <div>
                 <h2>Coordonnée</h2>
                 <div id="map"></div>
@@ -35,12 +34,12 @@
 </div>
 {% for plante_compte in plantes_comptes %}
 <script>
-    var map = L.map('map').setView([{{plante_compte.longitude}}, {{plante_compte.latitude}}], 15);
+    var map = L.map('map').setView([{{plante_compte.latitude}}, {{plante_compte.longitude}}], 15);
 
     var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     });
-    var maker = L.marker([{{plante_compte.longitude}}, {{plante_compte.latitude}}]).addTo(map)
+    var maker = L.marker([{{plante_compte.latitude}}, {{plante_compte.longitude}}]).addTo(map)
     osm.addTo(map);
     maker.addTo(map);
 </script>

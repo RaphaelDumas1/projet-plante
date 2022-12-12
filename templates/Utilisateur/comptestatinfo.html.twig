@@ -18,7 +18,6 @@
 <div class="div-center div-center-plante d-flex al-center">
     <div class="cadre d-flex al-center">
         {% for plante_compte in plantes_comptes %}
-            <img class="logo" src="{{plante_compte.photo}}">
             <div>
                 <h2>Coordonnée</h2>
                 <div id="map"></div>
@@ -30,21 +29,25 @@
             </div>
             {% for photo in photos %}
                 {% if plante_compte.plante.id == photo.plante.id %}
-                    <img class="logo" src="{{photo.url}}">
+                    <img class="logo" src="../../../../ImagePlantes/{{photo.url}}">
                 {%endif%}
             {%endfor%}
             {% for before in text_before %}
                 {% if plante_compte.plante.id == before.plante.id %}
                     <h3 class="texte">{{before.titre}}</h3>
                     <p class="texte">{{before.texte}}</p>
-                    <img class="logo" src="{{before.logo}}">
+                    {% if before.logo != null %}
+                        <img class="logo" src="../../../../ImagePlantes/{{before.logo}}">
+                    {% endif %}
                 {%endif%}
             {%endfor%}
             {% for after in text_after %}
                 {% if plante_compte.plante.id == after.plante.id %}
                     <h3 class="texte">{{after.titre}}</h3>
                     <p class="texte">{{after.texte}}</p>
-                    <img class="logo" src="{{after.logo}}">
+                    {% if after.logo != null %}
+                        <img class="logo" src="../../../../ImagePlantes/{{after.logo}}">
+                    {% endif %}
                 {%endif%}
             {%endfor%}
         {% endfor %}
@@ -52,12 +55,12 @@
 </div>
 {% for plante_compte in plantes_comptes %}
 <script>
-    var map = L.map('map').setView([{{plante_compte.longitude}}, {{plante_compte.latitude}}], 15);
+    var map = L.map('map').setView([{{plante_compte.latitude}}, {{plante_compte.longitude}}], 15);
 
     var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     });
-    var maker = L.marker([{{plante_compte.longitude}}, {{plante_compte.latitude}}]).addTo(map)
+    var maker = L.marker([{{plante_compte.latitude}}, {{plante_compte.longitude}}]).addTo(map)
     osm.addTo(map);
     maker.addTo(map);
 </script>
