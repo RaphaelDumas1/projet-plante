@@ -20,7 +20,9 @@
         {% for before in text_before %}
             <h3 class="texte">{{before.titre}}</h3>
             <p class="texte">{{before.texte}}</p>
-            <img class="logo" src="{{before.logo}}">
+            {% if before.logo != null %}
+                <img class="logo" src="../../../../ImagePlantes/{{before.logo}}">
+            {% endif %}
             {% for plante in plantes %}
                 <input type="button" class="button" value="Modifier" onclick="window.location.href='/admin/plantes/modifier/indice/{{plante.id}}/{{before.id}}';">
                 <input type="button" class="button" value="Effacer" onclick="window.location.href='/admin/plantes/effacer/indice/{{plante.id}}/{{before.id}}';">

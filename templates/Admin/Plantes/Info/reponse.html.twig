@@ -20,7 +20,9 @@
         {% for after in text_after %}
             <h3 class="texte">{{after.titre}}</h3>
             <p class="texte">{{after.texte}}</p>
-            <img class="logo" src="{{after.logo}}">
+            {% if after.logo != null %}
+                <img class="logo" src="../../../../ImagePlantes/{{after.logo}}">
+            {% endif %}
             {% for plante in plantes %}
                 <input type="button" class="button" value="Modifier" onclick="window.location.href='/admin/plantes/modifier/reponse/{{plante.id}}/{{after.id}}';">
                 <input type="button" class="button" value="Effacer" onclick="window.location.href='/admin/plantes/effacer/reponse/{{plante.id}}/{{after.id}}';">

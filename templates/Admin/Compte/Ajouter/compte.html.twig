@@ -1,16 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Inscription{% endblock %}
+{% block title %}Créer un compte{% endblock %}
 
 {% block header %}
-    <input type="button" class="button button-deconnexion" value="Annuler" onclick="window.location.href='{{path('Premiere_page')}}';">
-    <h1 class="en-tete">Cherche et Trouve</h1>
+    <input type="button" class="button button-deconnexion" value="Annuler" onclick="window.location.href='{{path('Admin-compte')}}';">
+    <h1 class="en-tete">Créer un compte</h1>
+    <input type="button" class="button button-deconnexion" value="Déconnexion" onclick="window.location.href='{{path('app_logout')}}';">
 {% endblock %}
 
 {% block body %}
     <div class="div-center d-flex al-center">
         <div class="cadre cadre-form cadre-user d-flex al-center">
-            <h1>Inscription</h1>
+            <h1>Créer un compte</h1>
             {{ form_start(form) }}
             <ul style="list-style-type: none">
                 <li>

@@ -18,7 +18,7 @@
     <div class="cadre d-flex al-center">
         <h2 class="texte">Photos</h2>
         {% for photo in photos %}
-            <img class="logo" src="{{photo.url}}">
+            <img class="logo" src="../../../../ImagePlantes/{{photo.url}}">
             {% for plante in plantes %}
                 <input type="button" class="button" value="Modifier" onclick="window.location.href='/admin/plantes/modifier/photo/{{plante.id}}/{{photo.id}}';">
                 <input type="button" class="button" value="Effacer" onclick="window.location.href='/admin/plantes/effacer/photo/{{plante.id}}/{{photo.id}}';">
