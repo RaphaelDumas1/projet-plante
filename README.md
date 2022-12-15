@@ -12,7 +12,7 @@ Documentation(obligatoire pour le bon fonctionnement de l'application) :
 
 * Lancez wamp
 
-* Vous devez creer une nouvelle base de donnees, pour cela vous pouvez utiliser Symfony en tappant "php bin/console 
+* Vous devez créer une nouvelle base de données, pour cela vous pouvez utiliser Symfony en tappant "php bin/console 
 doctrine:database:create" et ensuite en choisisant le nom que vous souhaitez.
 
 * Vous devez renommer le fichier "env copy" en ".env" puis enlever le # au debut de la ligne suivant : 
@@ -20,5 +20,5 @@ doctrine:database:create" et ensuite en choisisant le nom que vous souhaitez.
 devez la remplir comme ceci : 
 "mysql://identifiant de la bdd:mot de passe de la bdd@127.0.0.1:3306/nom de la BDD?serverVersion=8&charset=utf8mb4".
 
-* Ensuite, vous devez lancer votre serveur Symfony de la maniere suivante : "symfony server:start".
+* Ensuite, vous devez lancer votre serveur Symfony de la manière suivante : "symfony server:start".
 
