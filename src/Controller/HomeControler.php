@@ -208,6 +208,8 @@ class HomeControler extends AbstractController
     
     public function plante_effacer_after(TexteBefore $id, TexteBeforeRepository $repository, EntityManagerInterface $manager, int $plante)
     {
+        $image = $this->getParameter('images_directory') . '/' . $id->getLogo();
+        unlink($image);
         $manager->remove($id);
         $manager->flush();
         return $this->redirectToRoute('Admin-plante-info-indice', ['id' => $plante]);
@@ -223,9 +225,11 @@ class HomeControler extends AbstractController
             return $this->redirectToRoute('app_login');
         }
         $form = $this->createForm(TexteBeforeType::class, $before);
+        $effacer_image = $this->getParameter('images_directory') . '/' . $before->getLogo();
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            unlink($effacer_image);
             $image = $form->get('logo')->getData();
 
             $fichier = md5(uniqid()).'.'.$image->guessExtension();
@@ -303,6 +307,8 @@ class HomeControler extends AbstractController
     
     public function plante_effacer_before(TexteAfter $id, TexteAfterRepository $repository, EntityManagerInterface $manager, int $plante)
     {
+        $image = $this->getParameter('images_directory') . '/' . $id->getLogo();
+        unlink($image);
         $manager->remove($id);
         $manager->flush();
         return $this->redirectToRoute('Admin-plante-info-reponse', ['id' => $plante]);
@@ -318,9 +324,11 @@ class HomeControler extends AbstractController
             return $this->redirectToRoute('app_login');
         }
         $form = $this->createForm(TexteAfterType::class, $after);
+        $effacer_image = $this->getParameter('images_directory') . '/' . $after->getLogo();
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            unlink($effacer_image);
             $image = $form->get('logo')->getData();
 
             $fichier = md5(uniqid()).'.'.$image->guessExtension();
@@ -397,6 +405,8 @@ class HomeControler extends AbstractController
     
     public function plante_effacer_photo(Photo $id, PhotoRepository $repository, EntityManagerInterface $manager, int $plante)
     {
+        $image = $this->getParameter('images_directory') . '/' . $id->getUrl();
+        unlink($image);
         $manager->remove($id);
         $manager->flush();
         return $this->redirectToRoute('Admin-plante-info-photo', ['id' => $plante]);
@@ -412,9 +422,11 @@ class HomeControler extends AbstractController
             return $this->redirectToRoute('app_login');
         }
         $form = $this->createForm(PhotoType::class, $photo);
+        $effacer_image = $this->getParameter('images_directory') . '/' . $photo->getUrl();
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            unlink($effacer_image);
             $image = $form->get('url')->getData();
 
             $fichier = md5(uniqid()).'.'.$image->guessExtension();
@@ -577,6 +589,11 @@ class HomeControler extends AbstractController
     {
         if (!$this->getUser()){
             return $this->redirectToRoute('app_login');
+        }
+        $effacer_image = $this->getParameter('profil_directory') . '/' . $id->getPhoto();
+        $verification = $id->getPhoto();
+        if ($verification != "avatar.jpg"){
+            unlink($effacer_image);
         }
         $manager->remove($id);
         $manager->flush();

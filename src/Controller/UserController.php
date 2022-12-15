@@ -51,9 +51,14 @@ class UserController extends AbstractController
         }
         $user = $this->getUser();
         $form = $this->createForm(UserType::class, $user);
+        $effacer_image = $this->getParameter('profil_directory') . '/' . $user->getPhoto();
+        $verification = $user->getPhoto();
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($verification != "avatar.jpg"){
+                unlink($effacer_image);
+            }
             $image = $form->get('photo')->getData();
 
             $fichier = md5(uniqid()).'.'.$image->guessExtension();
@@ -112,6 +117,11 @@ class UserController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
         $user = $this->getUser();
+        $effacer_image = $this->getParameter('profil_directory') . '/' . $user->getPhoto();
+        $verification = $user->getPhoto();
+        if ($verification != "avatar.jpg"){
+            unlink($effacer_image);
+        }
 
         $manager->remove($user);
         $manager->flush();
