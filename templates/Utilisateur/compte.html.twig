@@ -11,7 +11,7 @@
 {% block body %}
 <div class="div-center d-flex al-center">
     <div class="cadre al-center d-flex">
-        <p>Niveau : {{ niveau }}</p>
+        <p>Niveau : {{ app.user.niveau }}</p>
         <p>Nombre de plante trouvé : {{plantes_comptes|length}}</p>
         <p>Photo de profil : <img class="icone" src="../../../../ImageProfil/{{ app.user.photo }}"></p>
         <p>Nom : {{ app.user.pseudo }}</p>

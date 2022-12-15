@@ -14,7 +14,7 @@
         <div>
             {% for compte in comptes %}
                 <p>Nom : {{compte.pseudo}}</p>
-                <p>Niveau : {{niveau}}</p>
+                <p>Niveau : {{compte.niveau}}</p>
                 <p>Nombre de plante trouvé : {{plantes_comptes|length}}</p>
                 <img class="icone" src="../../../../ImageProfil/{{ compte.photo }}"">
             {% endfor %}

@@ -21,24 +21,20 @@ use App\Repository\TexteBeforeRepository;
 use App\Repository\TexteAfterRepository;
 use App\Repository\PhotoRepository;
 
-use App\Service\CalculateLevel;
-
 class UserController extends AbstractController
 {
     /**
     * @Route("/Compte", name="compte")
     */
-    public function compte(PlanteCompteRepository $repository, CalculateLevel $calcul, UserInterface $userinterface): Response
+    public function compte(PlanteCompteRepository $repository, UserInterface $userinterface): Response
     {
         if (!$this->getUser()){
             return $this->redirectToRoute('app_login');
         }
-        $niveau = $calcul->calculate($userinterface, $repository);
         $user = $this->getUser();
         $plantes_comptes = $repository->findBy(array('user' => $user));
         return $this->render('Utilisateur/compte.html.twig', [
-            'plantes_comptes' => $plantes_comptes, 'niveau' => $niveau
-        ]);
+            'plantes_comptes' => $plantes_comptes ]);
     }
 
     /**

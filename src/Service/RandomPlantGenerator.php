@@ -7,6 +7,7 @@ class RandomPlantGenerator
     $photoRepository, $textAfterRepository): array
     {   
         $userId = $user->getId();
+        $userLevel = $user->getNiveau();
         $foundPlants = $planteCompteRepository->findBy(['user' => $userId]);
         $plantes = $plantRepository->findBy(['Active' => 1]);
         foreach($plantes as $key=>$plan){
@@ -15,6 +16,10 @@ class RandomPlantGenerator
                 if ($plan == $t){
                     unset($plantes[$key]);  
                 }
+            }
+            $r = $plan->getNiveau();
+            if ($r < $userLevel){
+                unset($plantes[$key]); 
             }
         }
         $plantes = array_values($plantes);

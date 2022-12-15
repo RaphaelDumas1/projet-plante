@@ -552,13 +552,12 @@ class HomeControler extends AbstractController
     * @Route("/admin/compte/{id}", name="Admin-compte-info")
     */
     
-    public function admin_compte_info(UserRepository $repository, int $id, PlanteCompteRepository $repository2, CalculateLevel $calcul): Response
+    public function admin_compte_info(UserRepository $repository, int $id, PlanteCompteRepository $repository2): Response
     {
         if (!$this->getUser()){
             return $this->redirectToRoute('app_login');
         }
         $comptes = $repository->findBy(array('id' => $id));
-        $niveau = $calcul->calculate($comptes, $repository2);
         $plantes_comptes = $repository2->findBy(array('user' => $id));
         return $this->render('Admin/Compte/Info/info.html.twig', [
             'comptes' => $comptes, 'plantes_comptes' => $plantes_comptes, 'niveau' => $niveau
@@ -625,7 +624,8 @@ class HomeControler extends AbstractController
     
     public function plant_image_uploader(Request $request, LoggerInterface $logger, EntityManagerInterface $manager, 
     UserInterface $user, DecodeBase64 $decodeImage, NameImage $nameImage, CreateFullPlanteCompte $createPlanteCompte, 
-    PlanteRepository $planteRepository, GetPlantWithName $getPlant, PlanteCompteRepository $planteCompteRepository) 
+    PlanteRepository $planteRepository, GetPlantWithName $getPlant, PlanteCompteRepository $planteCompteRepository,
+    CalculateLevel $calculateLevel) 
     {   
         if ($request->isXmlHttpRequest()){
             $image = $request->query->get('image_url');
@@ -640,6 +640,7 @@ class HomeControler extends AbstractController
             $nom_fichier = $nameImage->name($plante, $planteCompteRepository);    
             file_put_contents((dirname(__FILE__, 3)."/public/ImagesPlantesTrouvees/".$nom_fichier), $image);
             $createPlanteCompte->create($manager, $plante, $nom_fichier, $user, $longitude, $latitude, $datePhoto, $dateValide);
+            $calculateLevel->calculate($user, $planteCompteRepository, $manager);
         }
         return new Response();
     }
