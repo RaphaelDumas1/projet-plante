@@ -27,3 +27,7 @@ devez la remplir comme ceci :
 
 https://www.figma.com/file/xB08noPFEsYzr94udzwlno/Projet-Plante?node-id=0%3A1&t=XuvCWcVSl4ggZGXx-1
 
+### MCD de la base de donnée :
+
+<img src="Annexe/MCD.png">
+
