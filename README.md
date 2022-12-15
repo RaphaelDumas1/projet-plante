@@ -22,3 +22,8 @@ devez la remplir comme ceci :
 
 * Ensuite, vous devez lancer votre serveur Symfony de la manière suivante : "symfony server:start".
 
+---
+### Maquette du site :
+
+https://www.figma.com/file/xB08noPFEsYzr94udzwlno/Projet-Plante?node-id=0%3A1&t=XuvCWcVSl4ggZGXx-1
+
