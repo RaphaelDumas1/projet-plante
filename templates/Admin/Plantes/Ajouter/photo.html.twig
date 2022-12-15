@@ -4,7 +4,7 @@
 
 {% block header %}
 {% for plante in plantes %}
-    <input type="button" class="button button-deconnexion" value="Retour" onclick="window.location.href='/admin/plantes/{{plante.id}}';">
+    <input type="button" class="button button-deconnexion" value="Retour" onclick="window.location.href='/admin/plantes/photo/{{plante.id}}';">
 {% endfor %}
     <h1 class="font">Ajouter photo</h1>
     <input type="button" class="button button-deconnexion" value="Déconnexion" onclick="window.location.href='{{path('app_logout')}}';">

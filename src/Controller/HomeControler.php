@@ -174,7 +174,18 @@ class HomeControler extends AbstractController
 
 
         if ($form->isSubmitted()&& $form->isValid()) {
+            $image = $form->get('logo')->getData();
+
+            $fichier = md5(uniqid()).'.'.$image->guessExtension();
+        
+            $image->move(
+                $this->getParameter('images_directory'),
+                $fichier
+            );
+
+    
             $before = $form->getData();
+            $before->setLogo($fichier);
             $before->setPlante($plante);
             $manager->persist($before);
             $manager->flush();
@@ -210,6 +221,15 @@ class HomeControler extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $image = $form->get('logo')->getData();
+
+            $fichier = md5(uniqid()).'.'.$image->guessExtension();
+        
+            $image->move(
+                $this->getParameter('images_directory'),
+                $fichier
+            );
+            $before->setLogo($fichier);
             $repository->save($before, true);
 
             return $this->redirectToRoute('Admin-plante-info-indice', ['id' => $plante]);
@@ -249,7 +269,17 @@ class HomeControler extends AbstractController
 
 
         if ($form->isSubmitted()&& $form->isValid()) {
+            $image = $form->get('logo')->getData();
+
+            $fichier = md5(uniqid()).'.'.$image->guessExtension();
+        
+            $image->move(
+                $this->getParameter('images_directory'),
+                $fichier
+            );
+
             $after = $form->getData();
+            $after->setLogo($fichier);
             $after->setPlante($plante);
             $manager->persist($after);
             $manager->flush();
@@ -286,6 +316,15 @@ class HomeControler extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $image = $form->get('logo')->getData();
+
+            $fichier = md5(uniqid()).'.'.$image->guessExtension();
+        
+            $image->move(
+                $this->getParameter('images_directory'),
+                $fichier
+            );
+            $after->setLogo($fichier);
             $repository->save($after, true);
 
             return $this->redirectToRoute('Admin-plante-info-reponse', ['id' => $plante]);
@@ -325,8 +364,17 @@ class HomeControler extends AbstractController
 
 
         if ($form->isSubmitted()&& $form->isValid()) {
-            $photo = $form->getData();
+            $image = $form->get('url')->getData();
+
+            $fichier = md5(uniqid()).'.'.$image->guessExtension();
+        
+            $image->move(
+                $this->getParameter('images_directory'),
+                $fichier
+            );
+
             $photo->setPlante($plante);
+            $photo->setUrl($fichier);
             $manager->persist($photo);
             $manager->flush();
 
@@ -362,6 +410,15 @@ class HomeControler extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $image = $form->get('url')->getData();
+
+            $fichier = md5(uniqid()).'.'.$image->guessExtension();
+        
+            $image->move(
+                $this->getParameter('images_directory'),
+                $fichier
+            );
+            $photo->setUrl($fichier);
             $repository->save($photo, true);
 
             return $this->redirectToRoute('Admin-plante-info-photo', ['id' => $plante]);
@@ -455,7 +512,14 @@ class HomeControler extends AbstractController
                     $form->get('password')->getData()
                 )
             );
+            $image = $form->get('photo')->getData();
+            $fichier = md5(uniqid()).'.'.$image->guessExtension();
+            $image->move(
+                $this->getParameter('profil_directory'),
+                $fichier
+            );
             $user->setNiveau(1);
+            $user->setPhoto($fichier);
             $manager->persist($user);
             $manager->flush();
 

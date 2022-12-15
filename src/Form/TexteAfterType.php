@@ -9,6 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class TexteAfterType extends AbstractType
 {
@@ -17,7 +18,7 @@ class TexteAfterType extends AbstractType
         $builder
             ->add('titre', TextType::class, ['required' => false,'empty_data' => ''])
             ->add('texte', TextareaType::class)
-            ->add('logo', TextType::class, ['required' => false,'empty_data' => ''])
+            ->add('logo', FileType::class, ['data_class' => null,'required' => false,'empty_data' => ''])
             ->add('plante')
         ;
     }

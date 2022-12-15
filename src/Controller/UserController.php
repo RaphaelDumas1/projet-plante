@@ -50,7 +50,15 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user = $form->getData();
+            $image = $form->get('photo')->getData();
+
+            $fichier = md5(uniqid()).'.'.$image->guessExtension();
+        
+            $image->move(
+                $this->getParameter('profil_directory'),
+                $fichier
+            );
+            $user->setPhoto($fichier);
             $manager->persist($user);
             $manager->flush();
 

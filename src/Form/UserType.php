@@ -8,6 +8,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+
 
 class UserType extends AbstractType
 {
@@ -16,7 +18,7 @@ class UserType extends AbstractType
         $builder
             ->add('email')
             ->add('pseudo')
-            ->add('photo')
+            ->add('photo', FileType::class, ['data_class' => null,'required' => false,'empty_data' => ''])
         ;
     }
 

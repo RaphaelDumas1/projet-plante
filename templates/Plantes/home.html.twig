@@ -5,7 +5,7 @@
 {% block header %}
     <input type="button" class="button button-deconnexion" value="Déconnexion" onclick="window.location.href='{{path('app_logout')}}';">
     <h1 class="en-tete">Cherche et Trouve</h1>
-    <img class="icone" src="{{ app.user.photo }}" onclick="window.location.href='{{path('compte')}}';">
+    <img class="icone" src="../../../../ImageProfil/{{ app.user.photo }}" onclick="window.location.href='{{path('compte')}}';">
 {% endblock %}
 
 {% block body %}
