@@ -18,7 +18,7 @@ class RandomPlantGenerator
                 }
             }
             $r = $plan->getNiveau();
-            if ($r < $userLevel){
+            if ($userLevel < $r){
                 unset($plantes[$key]); 
             }
         }
