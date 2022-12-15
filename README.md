@@ -8,20 +8,20 @@ Version de Symfony : 6.1
 
 ### Contexte :
 
-_Il s’agit d’un projet fictif, toute relation avec un projet existant ne serait que fortuite.
+*Il s’agit d’un projet fictif, toute relation avec un projet existant ne serait que fortuite.*
 
-La ferme biologique du Bec Hellouin souhaite faire appel à vous afin de réaliser une petite application web de sensibilisation et de découverte de la flore locale. Ce projet répondant au nom de « Cherche & Trouve », souhaite mettre en place une petite application de jeu, à destination des enfants, leurs demandant de chercher autour d'eux, des plantes et de les photographier.
+*La ferme biologique du Bec Hellouin souhaite faire appel à vous afin de réaliser une petite application web de sensibilisation et de découverte de la flore locale. Ce projet répondant au nom de « Cherche & Trouve », souhaite mettre en place une petite application de jeu, à destination des enfants, leurs demandant de chercher autour d'eux, des plantes et de les photographier.*
 
-Dans l'idéal, le gérant de la ferme souhaiterait en faire une application permettant de géolocaliser les plantes afin de pouvoir réutiliser ces informations au sein d'autres applications._
+*Dans l'idéal, le gérant de la ferme souhaiterait en faire une application permettant de géolocaliser les plantes afin de pouvoir réutiliser ces informations au sein d'autres applications.*
 
 Ce projet est un site avec le Framework Symfony.
 Le but est de mettre en place un site adapté aux enfants qui permet de prendre des photos de plantes de faire valider par ses parents.
 
-## Front-End :
+#### Front-End :
 
 On retrouvera dans le Front-End, partie client, une possibilité de jouer ainsi que d'avoir accès à son profil et de modifier ses informations. Il sera aussi possible de voir ses statistiques de ses plantes trouver.
 
-## Back-End :
+#### Back-End :
 
 Dans la partie Back-End, partie administration, il sera possible d'ajouter des nouvelles plantes avec toutes les informations la concernant. Il sera possible d'avoir une vue sur les statisques de chaque utilisateurs.
 
