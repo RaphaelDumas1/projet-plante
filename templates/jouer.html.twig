@@ -18,7 +18,11 @@
         {% endfor %}
         </div>
         <div id="div2" class="flex-col-around h-90">
-            <div id="div1" class="message-succes d-none"></div>
+            <div id="div1" class="message-succes d-none">
+            {% for infoAfter in infos %}
+                <p class="texte">{{ infoAfter.texte }}</p>
+            {% endfor %}
+            </div>
             <div class="container-camera" id="container-camera">
                 <img src="/ImagePlantes/{{photo}}" id="photo-plante" class="cadre-feuille"></img>
                 <button id="boutton-camera" class="button-camera">Activer l'appareil</button>

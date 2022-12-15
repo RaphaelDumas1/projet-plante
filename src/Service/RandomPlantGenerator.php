@@ -3,7 +3,8 @@ namespace App\Service;
 
 class RandomPlantGenerator
 {
-    public function randomPlant($plantRepository, $textBeforeRepository, $user, $planteCompteRepository, $photoRepository): array
+    public function randomPlant($plantRepository, $textBeforeRepository, $user, $planteCompteRepository, 
+    $photoRepository, $textAfterRepository): array
     {   
         $userId = $user->getId();
         $foundPlants = $planteCompteRepository->findBy(['user' => $userId]);
@@ -27,7 +28,8 @@ class RandomPlantGenerator
         $photo = $photo[0];
         $photo = $photo->getUrl();
         $texte_before = $textBeforeRepository->findBy(['plante' => $plante_id]);
-        $result = [$plante, $texte_before, $photo];
+        $texte_after = $textAfterRepository->findBy(['plante' => $plante_id]);
+        $result = [$plante, $texte_before, $photo, $texte_after];
         return $result;
     }
 }

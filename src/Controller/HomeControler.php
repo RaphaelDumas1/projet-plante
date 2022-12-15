@@ -42,6 +42,7 @@ use App\Service\NameImage;
 use App\Service\CreateFullPlanteCompte;
 use App\Service\CreateFullPhoto;
 use App\Service\GetPlantWithName;
+use App\Service\FillDB;
 
 class HomeControler extends AbstractController
 {
@@ -57,22 +58,24 @@ class HomeControler extends AbstractController
     /**
     * @Route("/home", name="Menu")
     */
-    public function home(): Response
+    public function home(EntityManagerInterface $manager, FillDB $fillDB, PlanteRepository $plantRepository): Response
     {
         if (!$this->getUser()){
             return $this->redirectToRoute('app_login');
         }
+        $fillDB->fill($manager, $plantRepository);
         return $this->render('Plantes/home.html.twig');
     }
 
     /**
     * @Route("/admin", name="Admin")
     */
-    public function admin(): Response
+    public function admin(EntityManagerInterface $manager, FillDB $fillDB, PlanteRepository $plantRepository): Response
     {
         if (!$this->getUser()){
             return $this->redirectToRoute('app_login');
         }
+        $fillDB->fill($manager, $plantRepository);
         return $this->render('Admin/admin.html.twig');
     }
 
@@ -518,13 +521,18 @@ class HomeControler extends AbstractController
     */
     public function jouer(RandomPlantGenerator $random_plant, PlanteRepository $plantRepository, 
     TexteBeforeRepository $textBeforeRepository, UserInterface $user, PlanteCompteRepository $planteCompteRepository, 
-    PhotoRepository $photoRepository): Response
+    PhotoRepository $photoRepository,
+    TexteAfterRepository $textAfterRepository): Response
     {   
-        $randPlant = $random_plant->randomPlant($plantRepository, $textBeforeRepository, $user, $planteCompteRepository, $photoRepository);
+        
+        $randPlant = $random_plant->randomPlant($plantRepository, $textBeforeRepository, $user, $planteCompteRepository, $photoRepository, 
+        $textAfterRepository);
         $plante = $randPlant[0];
         $texteBefore = $randPlant[1];
         $photo = $randPlant[2];
-        return $this->render('jouer.html.twig', ["plante" => $plante, "infos" => $texteBefore, "photo" => $photo]);
+        $texteAfter = $randPlant[3];
+        return $this->render('jouer.html.twig', ["plante" => $plante, "infos" => $texteBefore, "photo" => $photo, 
+        "infosAfter" => $texteAfter]);
     }
     
         /**
@@ -532,9 +540,8 @@ class HomeControler extends AbstractController
     */
     
     public function plant_image_uploader(Request $request, LoggerInterface $logger, EntityManagerInterface $manager, 
-    PhotoRepository $photoRepository,  UserInterface $user, DecodeBase64 $decodeImage, NameImage $nameImage,
-    CreateFullPhoto $createPhoto, CreateFullPlanteCompte $createPlanteCompte, PlanteRepository $planteRepository,
-    GetPlantWithName $getPlant) 
+    UserInterface $user, DecodeBase64 $decodeImage, NameImage $nameImage, CreateFullPlanteCompte $createPlanteCompte, 
+    PlanteRepository $planteRepository, GetPlantWithName $getPlant, PlanteCompteRepository $planteCompteRepository) 
     {   
         if ($request->isXmlHttpRequest()){
             $image = $request->query->get('image_url');
@@ -546,10 +553,9 @@ class HomeControler extends AbstractController
             $datePhoto = strval($datePhoto);
             $plante = $getPlant->getPlant($nom_plante, $planteRepository);
             $image = $decodeImage->decode($image);
-            $nom_fichier = $nameImage->name($plante, $photoRepository);    
-            file_put_contents((dirname(__FILE__, 3)."/public/ImagePlantes/".$nom_fichier), $image);
+            $nom_fichier = $nameImage->name($plante, $planteCompteRepository);    
+            file_put_contents((dirname(__FILE__, 3)."/public/ImagesPlantesTrouvees/".$nom_fichier), $image);
             $createPlanteCompte->create($manager, $plante, $nom_fichier, $user, $longitude, $latitude, $datePhoto, $dateValide);
-            $createPhoto->create($nom_fichier, $plante, $manager);
         }
         return new Response();
     }

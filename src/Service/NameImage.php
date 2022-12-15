@@ -2,9 +2,9 @@
 namespace App\Service;
 
 class NameImage{
-    public function name($plante, $photoRepository){
+    public function name($plante, $planteCompteRepository){
         $nom_plante = $plante->getNom();
-        $images_existantes = $photoRepository->findBy(['plante' => $plante]);
+        $images_existantes = $planteCompteRepository->findBy(['plante' => $plante]);
         $nombre_images = count($images_existantes);
         if (substr($nom_plante, 0, 2) == "L'"){
             $nom_plante = substr($nom_plante, 2);

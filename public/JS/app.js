@@ -78,11 +78,11 @@ function trouver() {
     const newContent = document.createTextNode(`Felicitation tu a ajouter le ${nom_plante} a ta collection`);
     newDiv.appendChild(newContent);
     newDiv.classList.add("en-tete");
-    newDiv.classList.add("texte-a");
+    newDiv.classList.add("text-c");
     const currentDiv = document.getElementById("div1");
     currentDiv.classList.add("flex-col-around");
-    currentDiv.appendChild(newDiv)
-    setTimeout(function () { location.reload(true) }, 3000);
+    currentDiv.insertBefore(newDiv, currentDiv.firstElementChild)
+    setTimeout(function () { location.reload(true) }, 6000);
 };
 
 

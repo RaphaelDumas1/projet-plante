@@ -16,8 +16,7 @@
   align-items: center;
   flex-direction: column;
 }
-
-.flex-col-around::after{
+.flex-col-around::after {
   content: "";
   top: 0;
   left: 0;
@@ -29,6 +28,10 @@
   background-repeat: no-repeat;
   background-size: cover;
   opacity: 0.4;
+}
+
+.text-c {
+  text-align: center;
 }
 
 .message-succes {
