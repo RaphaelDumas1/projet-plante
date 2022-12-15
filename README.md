@@ -31,3 +31,10 @@ https://www.figma.com/file/xB08noPFEsYzr94udzwlno/Projet-Plante?node-id=0%3A1&t=
 
 <img src="Annexe/MCD.png">
 
+### Use Case du projet :
+
+<img src="Annexe/Use_Case.png">
+
+### UML du projet :
+
+<img src="Annexe/UML.png">
