@@ -1,12 +1,12 @@
 # Projet plante
-## Application realisée dans le cadre d'un projet de fin de trimestre.
+## Application réalisée dans le cadre d'un projet de fin de trimestre.
 
 Contributeurs : Jeanne GABLIN, Raphael Dumas, Killian Lechevalier.
 
 Version de PHP : 8.1.0
 Version de Symfony : 6.1
 
-Documentation(obligatoire pour le bon fonctionnement de l'application) :
+Documentation (obligatoire pour le bon fonctionnement de l'application) :
 
 * Vous devez telecharger WAMP(windows), LAMP(Linux), XAMP(Autres OS).
 
