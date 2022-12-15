@@ -45,7 +45,11 @@ Documentation (obligatoire pour le bon fonctionnement de l'application) :
 * Ensuite, vous devez la remplir comme ceci : 
 "mysql://identifiant de la bdd:mot de passe de la bdd@127.0.0.1:3306/nom de la BDD?serverVersion=8&charset=utf8mb4".
 
-* Vous devez créer une nouvelle base de données, pour cela vous pouvez utiliser Symfony en tappant `php bin/console doctrine:database:create` et ensuite en choisisant le nom que vous souhaitez.
+* Vous devez créer une nouvelle base de données, pour cela vous pouvez utiliser Symfony en tappant 
+`php bin/console doctrine:database:create`.
+
+* Puis, il vous faut faire une migration des informations vers cette base de données avec
+`php bin/console doctrine:migrations:migrate.`
 
 * Ensuite, vous devez lancer votre serveur Symfony de la manière suivante : "symfony server:start".
 
