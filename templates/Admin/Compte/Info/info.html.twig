@@ -16,7 +16,7 @@
                 <p>Nom : {{compte.pseudo}}</p>
                 <p>Niveau : {{compte.niveau}}</p>
                 <p>Nombre de plante trouvé : {{plantes_comptes|length}}</p>
-                <img class="icone" src="{{compte.photo}}">
+                <img class="icone" src="../../../../ImageProfil/{{ compte.photo }}"">
             {% endfor %}
         </div>
         <div>
@@ -25,7 +25,7 @@
             {% endfor %}
         </div>
         {% for compte in comptes %}
-            <input type="button" class="button" value="Effacer Compte" onclick="window.location.href='/admin/compte/effacer/{{compte.id}}';">
+            <input type="button" class="button button-deconnexion" value="Effacer Compte" onclick="window.location.href='/admin/compte/effacer/{{compte.id}}';">
         {% endfor %}
     </div>
 </div>
