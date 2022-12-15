@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 use App\Form\UserType;
 use App\Form\UserPasswordType;
@@ -20,20 +21,23 @@ use App\Repository\TexteBeforeRepository;
 use App\Repository\TexteAfterRepository;
 use App\Repository\PhotoRepository;
 
+use App\Service\CalculateLevel;
+
 class UserController extends AbstractController
 {
     /**
     * @Route("/Compte", name="compte")
     */
-    public function compte(PlanteCompteRepository $repository): Response
+    public function compte(PlanteCompteRepository $repository, CalculateLevel $calcul, UserInterface $userinterface): Response
     {
         if (!$this->getUser()){
             return $this->redirectToRoute('app_login');
         }
+        $niveau = $calcul->calculate($userinterface, $repository);
         $user = $this->getUser();
         $plantes_comptes = $repository->findBy(array('user' => $user));
         return $this->render('Utilisateur/compte.html.twig', [
-            'plantes_comptes' => $plantes_comptes,
+            'plantes_comptes' => $plantes_comptes, 'niveau' => $niveau
         ]);
     }
 

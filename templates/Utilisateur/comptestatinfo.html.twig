@@ -27,11 +27,7 @@
                 <p>Photo :{{plante_compte.datephoto.format('d F Y')}}</p>
                 <p>Valide :{{plante_compte.datevalide.format('d F Y')}}</p>
             </div>
-            {% for photo in photos %}
-                {% if plante_compte.plante.id == photo.plante.id %}
-                    <img class="logo" src="../../../../ImagePlantes/{{photo.url}}">
-                {%endif%}
-            {%endfor%}
+            <img class="logo" src="../../../../ImagesPlantesTrouvees/{{plante_compte.photo}}">
             {% for before in text_before %}
                 {% if plante_compte.plante.id == before.plante.id %}
                     <h3 class="texte">{{before.titre}}</h3>

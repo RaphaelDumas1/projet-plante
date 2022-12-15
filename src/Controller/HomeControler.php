@@ -44,6 +44,8 @@ use App\Service\CreateFullPhoto;
 use App\Service\GetPlantWithName;
 use App\Service\FillDB;
 
+use App\Service\CalculateLevel;
+
 class HomeControler extends AbstractController
 {
     /**
@@ -538,15 +540,16 @@ class HomeControler extends AbstractController
     * @Route("/admin/compte/{id}", name="Admin-compte-info")
     */
     
-    public function admin_compte_info(UserRepository $repository, int $id, PlanteCompteRepository $repository2): Response
+    public function admin_compte_info(UserRepository $repository, int $id, PlanteCompteRepository $repository2, CalculateLevel $calcul): Response
     {
         if (!$this->getUser()){
             return $this->redirectToRoute('app_login');
         }
         $comptes = $repository->findBy(array('id' => $id));
+        $niveau = $calcul->calculate($comptes, $repository2);
         $plantes_comptes = $repository2->findBy(array('user' => $id));
         return $this->render('Admin/Compte/Info/info.html.twig', [
-            'comptes' => $comptes, 'plantes_comptes' => $plantes_comptes,
+            'comptes' => $comptes, 'plantes_comptes' => $plantes_comptes, 'niveau' => $niveau
         ]);
     }
 
