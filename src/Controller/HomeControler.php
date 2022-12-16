@@ -560,7 +560,7 @@ class HomeControler extends AbstractController
         $comptes = $repository->findBy(array('id' => $id));
         $plantes_comptes = $repository2->findBy(array('user' => $id));
         return $this->render('Admin/Compte/Info/info.html.twig', [
-            'comptes' => $comptes, 'plantes_comptes' => $plantes_comptes, 'niveau' => $niveau
+            'comptes' => $comptes, 'plantes_comptes' => $plantes_comptes
         ]);
     }
 

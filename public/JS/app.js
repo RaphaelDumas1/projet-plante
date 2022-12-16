@@ -93,7 +93,7 @@ async function uploadFile() {
     resizedCanvas.width = "300";
     var canvas = document.getElementById("photo");
     resizedContext.drawImage(canvas, 0, 0, 300, 300);
-    var image_url = resizedCanvas.toDataURL("image/webp", 0.99);
+    var image_url = resizedCanvas.toDataURL("image/webp", 0.5);
     const date = new Date();
     let jour = date.getDate();
     let mois = date.getMonth() + 1;
